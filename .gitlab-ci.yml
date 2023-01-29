@@ -1,0 +1,106 @@
+default:
+    image: node:16
+    before_script:
+        - |
+            {
+                echo "@experiments72:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
+                echo "${CI_API_V4_URL#https?}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${CI_JOB_TOKEN}"
+            } | tee -a .npmrc
+
+cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - .npm/
+
+variables:
+    NPM_TOKEN: ${CI_JOB_TOKEN}
+    GITLAB_TOKEN: ${CI_GROUP_TOKEN}
+
+.dependencies_cache:
+    cache:
+        key:
+            files:
+                - package-lock.json
+        paths:
+            - .npm
+        policy: pull
+
+stages:
+    - install
+    - build
+    - static analysis
+    - test
+    - release
+
+install:
+    extends: .dependencies_cache
+    stage: install
+    script:
+        - npm ci
+    cache:
+        policy: pull-push
+    artifacts:
+        expire_in: 1h
+        paths:
+            - node_modules
+
+lint:
+    stage: build
+    script:
+        - npm run lint
+
+build:
+    stage: build
+    artifacts:
+        untracked: true
+        name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    script:
+        - npm run build
+
+# sonarqube:
+#     stage: static analysis
+#     image:
+#         name: sonarsource/sonar-scanner-cli:latest
+#         entrypoint: [""]
+
+#     variables:
+#         SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+#         GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+#     cache:
+#         key: "${CI_JOB_NAME}"
+#         paths:
+#             - .sonar/cache
+#     script:
+#         - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.projectKey="${GROUP_NAME}":"${CI_PROJECT_NAME}"
+#     allow_failure: true # or the name of your main branch
+
+dependencies-scan:
+    stage: static analysis
+    dependencies:
+        - build
+    script:
+        - npm audit
+
+test:
+    stage: test
+    dependencies:
+        - build
+    script:
+        - npm run test:ci
+    artifacts:
+        when: always
+        reports:
+            junit:
+                - junit.xml
+            coverage_report:
+                coverage_format: cobertura
+                path: coverage/cobertura-coverage.xml
+
+publish:
+    stage: release
+    dependencies:
+        - build
+    only:
+        - main
+    script:
+        - npx semantic-release

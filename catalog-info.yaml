@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: basic-service
+  description: a basic service module to implement microservices
+  annotations:
+    gitlab.com/project-slug: experiments72/basic-service
+    backstage.io/techdocs-ref: dir:.
+    sonarqube.org/project-key: users-service
+spec:
+  type: library
+  lifecycle: experimental
+  owner: c.demeo

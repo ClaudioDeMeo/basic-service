@@ -1,0 +1,18 @@
+# other files
+.npm
+.husky
+.gitlab-ci.yml
+.editorconfig
+.eslint-rc.json
+.releaserc.json
+catalog-info.yaml
+test
+
+.DS_Store
+
+# source
+*.ts
+!*.d.ts
+
+commitlint.config.js
+jest.config.js

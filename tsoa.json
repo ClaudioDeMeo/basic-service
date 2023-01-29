@@ -1,0 +1,8 @@
+{
+    "entryFile": "examples/index.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "spec": {
+        "outputDirectory": "swagger",
+        "specVersion": 3
+    }
+}

@@ -9,7 +9,7 @@ export class BasicService{
     public constructor(private readonly serviceConfig?: ServiceConfig) {
         this.server = Server.getInstance();
 
-        if (this.serviceConfig?.swagger){
+        if (this.serviceConfig?.swagger !== false){
             this.server.prepareSwagger(serviceConfig?.docsPath, serviceConfig?.swaggerLocation);
         }
     }

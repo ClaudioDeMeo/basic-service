@@ -1,60 +1,73 @@
 import { BasicService } from '../../src';
-import { Application } from '../../src/interfaces/application';
+import { Server } from '../../src/basic-service/server';
+import { ServerApplication } from '../../src/interfaces/server-application';
 
 describe('basic-service', (): void => {
     describe('BasicService usage', (): void => {
 
-        
-        class Stub extends BasicService{
-
-        }
-
-        const applicationMock: Application = {
-            listen: jest.fn()
-        };
-        const listenSpy = jest.spyOn(applicationMock, 'listen');
+        let serverApplicationMock: ServerApplication;
 
         beforeAll(() => {
-            (Stub.prototype as any).application = applicationMock;
+            serverApplicationMock = {
+                listen: jest.fn(),
+                addMiddleware: jest.fn(),
+                addController: jest.fn(),
+                addControllerHandler: jest.fn(),
+                prepareSwagger: jest.fn(),
+            };
+
+            jest.spyOn(Server, 'getInstance').mockReturnValue(serverApplicationMock);
         });
 
-        describe('constructor', (): void => {
 
-            it('should have application property initialized from the decorator', (): void => {
-                const stub: BasicService = new Stub();
-                const application = (stub as any).application;
-                expect(application).not.toBeUndefined();
+        describe('new BasicService()', (): void => {
+            beforeEach(() => {
+                (serverApplicationMock.prepareSwagger as jest.Mock).mockClear();
+            });
+
+            it('should call serverApplication\'s prepareSwagger by default or if swagger = true in the config', (): void => {
+                new BasicService();
+                new BasicService({swagger: true});
+
+                expect(serverApplicationMock.prepareSwagger).toBeCalledTimes(2);
+            });
+
+            it('should not call serverApplication\'s prepareSwagger if swagger = false in the config', (): void => {
+                new BasicService({swagger: false});
+
+                expect(serverApplicationMock.prepareSwagger).not.toBeCalled();
+            });
+
+            it('should call serverApplication\'s prepareSwagger with the path and location given as parameters', (): void => {
+                const path = '/test-path';
+                const location = '/test-location';
+                new BasicService({
+                    swagger: true,
+                    swaggerLocation: location,
+                    docsPath: path
+                });
+
+                expect(serverApplicationMock.prepareSwagger).toBeCalledWith(path, location);
             });
         });
 
         describe('.run()', (): void => {
 
-            it('should call application\'s listen method', (): void => {
-                const stub: BasicService = new Stub();
-                stub.run();
-                expect(listenSpy).toBeCalled();
-            });
-
-            it('should call application\'s listen method passing the port', (): void => {
+            it('should call serverApplication\'s listen method with the port given in the constructor', (): void => {
                 const port = 8080;
-                const stub: BasicService = new Stub(port);
-                stub.run();
-                expect(listenSpy).toBeCalledWith(port, undefined);
+                const basicService: BasicService = new BasicService({port: port});
+                basicService.run();
+
+                expect(serverApplicationMock.listen).toBeCalledWith(port, undefined);
             });
 
-            it('should call application\'s listen method passing the callback', (): void => {
-                const callback = jest.fn();
-                const stub: BasicService = new Stub();
-                stub.run(callback);
-                expect(listenSpy).toBeCalledWith(undefined, callback);
-            });
-
-            it('should call application\'s listen method passing the port and the callback', (): void => {
+            it('should call serverApplication\'s listen method passing the callback ', (): void => {
                 const port = 8080;
+                const basicService: BasicService = new BasicService({port: port});
                 const callback = jest.fn();
-                const stub: BasicService = new Stub(port);
-                stub.run(callback);
-                expect(listenSpy).toBeCalledWith(port, callback);
+                basicService.run(callback);
+
+                expect(serverApplicationMock.listen).toBeCalledWith(port, callback);
             });
         });
     });

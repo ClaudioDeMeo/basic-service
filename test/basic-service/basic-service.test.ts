@@ -3,7 +3,7 @@ import { Server } from '../../src/basic-service/server';
 import { ServerApplication } from '../../src/interfaces/server-application';
 
 describe('basic-service', (): void => {
-    describe('BasicService usage', (): void => {
+    describe('BasicService', (): void => {
 
         let serverApplicationMock: ServerApplication;
 

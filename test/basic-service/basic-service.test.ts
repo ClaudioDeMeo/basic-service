@@ -10,6 +10,7 @@ describe('basic-service', (): void => {
         beforeAll(() => {
             serverApplicationMock = {
                 listen: jest.fn(),
+                close: jest.fn(),
                 addMiddleware: jest.fn(),
                 addController: jest.fn(),
                 addControllerHandler: jest.fn(),

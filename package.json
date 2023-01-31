@@ -21,8 +21,8 @@
         "lint": "eslint src",
         "prepare": "is-ci || husky install",
         "swagger": "tsoa spec",
-        "predoc": "npm run test:coverage",
-        "doc": "npx compodoc -p tsconfig.doc.json --unitTestCoverage coverage/coverage-summary.json --disablePrivate -d docs"
+        "predoc": "npm run test:coverage && mkdir -p docs && cp coverage/coverage-summary.json docs/coverage-summary.json",
+        "doc": "npx compodoc -p tsconfig.doc.json --unitTestCoverage docs/coverage-summary.json --disablePrivate -d docs"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.4.2",

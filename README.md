@@ -6,7 +6,7 @@ This is a basic service module to implement microservices.
 
 Nodejs >= 18
 
-`npm i @experiments72/users-service`
+`npm i @experiments72/basic-service`
 
 ## Usage
 

@@ -94,7 +94,9 @@ export class ExpressServer implements ServerApplication {
                 this.routerControllerMap[controllerid].controller.handler = [];
             }
 
-            this.routerControllerMap[controllerid].controller.handler?.push(controllerHandler);
+            if (this.routerControllerMap[controllerid].controller.handler?.indexOf(controllerHandler) === -1){
+                this.routerControllerMap[controllerid].controller.handler?.push(controllerHandler);
+            }
         });
     }
 

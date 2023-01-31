@@ -8,7 +8,8 @@ export const Controller = (name?: string) => {
 
         server.addController({
             name: name || target.name,
-            instance: new target.constructor()
+            instance: new target.constructor(),
+            handler: target.prototype.handler
         });
     }
 }

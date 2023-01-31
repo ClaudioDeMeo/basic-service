@@ -12,6 +12,12 @@ describe('decorators', (): void => {
             (Server as any).app = undefined;
         });
 
+        afterAll((): void => {
+            const app = Server.getInstance();
+            app.close();
+            (Server as any).app = undefined;
+        });
+
         it('should initialize the BasicService with the given config', (): void => {
 
             const config: ServiceConfig = {

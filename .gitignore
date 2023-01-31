@@ -13,6 +13,10 @@
 src/**/*.js
 src/**/*.d.ts
 
+#examples
+examples/**/*.js
+examples/**/*.d.ts
+
 # misc
 .DS_Store
 .npmrc

@@ -61,6 +61,10 @@ export class ExpressServer implements ServerApplication {
     }
 
     public addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
+        if (!this.routerControllerMap[controllerid]) {
+            throw new Error('controller not found');
+        }
+
         if (!Array.isArray(controllerHandlers)){
             controllerHandlers = [controllerHandlers];
         }

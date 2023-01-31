@@ -4,9 +4,14 @@ import { Server } from './server';
 
 export class BasicService{
 
+    private readonly serviceConfig?: ServiceConfig;
     protected readonly server: ServerApplication;
 
-    public constructor(private readonly serviceConfig?: ServiceConfig) {
+    public constructor(serviceConfig?: ServiceConfig) {
+        if (serviceConfig){
+            this.serviceConfig = serviceConfig;
+        }
+
         this.server = Server.getInstance();
 
         if (this.serviceConfig?.swagger !== false){

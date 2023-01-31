@@ -54,6 +54,11 @@ describe('basic-service', (): void => {
 
         describe('.run()', (): void => {
 
+            beforeAll((): void => {
+                const app = Server.getInstance();
+                app.close();
+            });
+
             it('should call serverApplication\'s listen method with the port given in the constructor', (): void => {
                 const port = 8080;
                 const basicService: BasicService = new BasicService({port: port});

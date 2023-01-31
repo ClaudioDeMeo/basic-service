@@ -1,6 +1,14 @@
 import { ServiceConfig } from '../interfaces';
 
-export const Service = (serviceConfig: ServiceConfig, run?: () => void) => {
+/**
+ * Decorator that marks a class as a service. The class must extens `BasicService`
+ *
+ * @param {ServiceConfig} serviceConfig - The service configuration.
+ * @param {Function} [run] - The listen callback. If provider the service will be instantiate automatically.
+ *
+ * @return {Function}
+ */
+export function Service(serviceConfig: ServiceConfig, run?: () => void){
     return (target: any): void => {
         target.prototype.serviceConfig = serviceConfig;
 

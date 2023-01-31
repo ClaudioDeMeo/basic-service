@@ -22,7 +22,7 @@
         "prepare": "is-ci || husky install",
         "swagger": "tsoa spec",
         "predoc": "npm run test:coverage",
-        "doc": "npx compodoc -p tsconfig.json --unitTestCoverage coverage/coverage-summary.json -d docs"
+        "doc": "npx compodoc -p tsconfig.doc.json --unitTestCoverage coverage/coverage-summary.json -d docs"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.4.2",

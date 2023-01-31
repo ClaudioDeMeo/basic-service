@@ -7,18 +7,12 @@ import { Server } from './server';
  */
 export class BasicService{
 
-    /**
-     * Rappresents the service configuration.
-     * @type {ServiceConfig}
-     * @private
-     */
     private readonly serviceConfig: ServiceConfig;
 
     /**
      * The server application instance.
-     * @protected
      * @type {ServerApplication}
-     * @private
+     * @protected
      */
     protected readonly server: ServerApplication;
 

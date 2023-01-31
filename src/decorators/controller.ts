@@ -4,10 +4,8 @@ export const Controller = (name?: string) => {
     return (target: any): void => {
         const server = Server.getInstance();
 
-        target.prototype.id = name || target.constructor.name;
-
         server.addController({
-            name: target.prototype.id,
+            name: name || target.name,
             instance: new target.constructor()
         });
     }

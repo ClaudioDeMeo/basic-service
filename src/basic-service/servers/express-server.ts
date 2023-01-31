@@ -47,17 +47,24 @@ export class ExpressServer implements ServerApplication {
             throw new Error('controller already presents');
         }
 
+        const router = this.createRouterForController(controller);
+
+        if (controller.handler) {
+            this.addControllerHandlers(controller.name, controller.handler);
+        }
+
+        this.app.use(router);
+    }
+
+    private createRouterForController(controller: Controller): Router {
         const router = express.Router();
 
         this.routerControllerMap[controller.name] = {
             router: router,
             controller: controller
         };
-        if (controller.handler) {
-            this.addControllerHandlers(controller.name, controller.handler);
-        }
 
-        this.app.use(router);
+        return router;
     }
 
     public addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {

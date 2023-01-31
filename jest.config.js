@@ -11,6 +11,7 @@ module.exports = {
         'text-summary',
         'cobertura',
         'json',
-        'clover'
+        'clover',
+        'json-summary'
     ]
 };

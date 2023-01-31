@@ -6,6 +6,9 @@
 # testing
 /coverage
 
+#documentation
+/docs
+
 # production
 src/**/*.js
 src/**/*.d.ts

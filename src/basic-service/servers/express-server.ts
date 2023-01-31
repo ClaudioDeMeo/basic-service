@@ -54,26 +54,37 @@ export class ExpressServer implements ServerApplication {
             controller: controller
         };
         if (controller.handler) {
-            this.addControllerHandler(controller.name, controller.handler);
+            this.addControllerHandlers(controller.name, controller.handler);
         }
 
         this.app.use(router);
     }
 
-    public addControllerHandler(controllerid: string, controllerHandler: ControllerHandler): void {
+    public addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
+        if (!Array.isArray(controllerHandlers)){
+            controllerHandlers = [controllerHandlers];
+        }
+
         const router = this.routerControllerMap[controllerid].router;
         const controller = this.routerControllerMap[controllerid].controller.instance;
-        const method = controllerHandler.method;
-        const path = controllerHandler.path;
-        const handler = controllerHandler.handler;
 
-        router[method](path, async(req: any, res: any) => {
-            const response = await controller[handler](req);
+        controllerHandlers.forEach((controllerHandler: ControllerHandler): void => {
+            const method = controllerHandler.method;
+            const path = controllerHandler.path;
+            const handler = controllerHandler.handler;
 
-            return res.send(response);
+            router[method](path, async(req: any, res: any) => {
+                const response = await controller[handler](req);
+
+                return res.send(response);
+            });
+
+            if (!this.routerControllerMap[controllerid].controller.handler){
+                this.routerControllerMap[controllerid].controller.handler = [];
+            }
+
+            this.routerControllerMap[controllerid].controller.handler?.push(controllerHandler);
         });
-
-        this.routerControllerMap[controllerid].controller.handler = controllerHandler;
     }
 
     public prepareSwagger(path: string = DEFAULT_SWAGGER_PATH, location: string = DEFAULT_SWAGGER_LOCATION): void {

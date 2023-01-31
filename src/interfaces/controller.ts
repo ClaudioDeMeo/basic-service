@@ -1,7 +1,7 @@
 export interface Controller {
     name: string;
     instance: any;
-    handler?: ControllerHandler;
+    handler?: ControllerHandler[];
 }
 
 export enum CONTROLLER_METHOD {

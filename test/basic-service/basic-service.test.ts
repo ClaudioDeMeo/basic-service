@@ -13,7 +13,7 @@ describe('basic-service', (): void => {
                 close: jest.fn(),
                 addMiddleware: jest.fn(),
                 addController: jest.fn(),
-                addControllerHandler: jest.fn(),
+                addControllerHandlers: jest.fn(),
                 prepareSwagger: jest.fn(),
             };
 

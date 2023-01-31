@@ -10,7 +10,7 @@ export interface ServerApplication {
 
     addController(controller: Controller): void;
 
-    addControllerHandler(controllerid: string, controllerHandler: ControllerHandler): void;
+    addControllerHandlers(controllerid: string, controllerHandler: ControllerHandler | ControllerHandler[]): void;
 
     prepareSwagger(path?: string, location?: string): void;
 

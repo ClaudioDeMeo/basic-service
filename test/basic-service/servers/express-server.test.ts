@@ -181,11 +181,13 @@ describe('basic-service', (): void => {
                     const controller: Controller = {
                         name: 'handler',
                         instance: testController,
-                        handler: {
-                            method: CONTROLLER_METHOD.GET,
-                            path: path,
-                            handler: 'get'
-                        }
+                        handler: [
+                            {
+                                method: CONTROLLER_METHOD.GET,
+                                path: path,
+                                handler: 'get'
+                            }
+                        ]
                     };
 
                     expressServer.addController(controller);
@@ -230,7 +232,7 @@ describe('basic-service', (): void => {
                         handler: 'get'
                     };
 
-                    expressServer.addControllerHandler(controller.name, controllerHandler);
+                    expressServer.addControllerHandlers(controller.name, controllerHandler);
 
                     const app = (expressServer as any).app;
                     const res = await request(app).get(path);

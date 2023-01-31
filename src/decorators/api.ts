@@ -1,6 +1,5 @@
-import { Server } from '../basic-service/server';
 import { ApiConfig } from '../interfaces'
-import { ControllerHandler } from '../interfaces/controller';
+import { ControllerHandler, CONTROLLER_METHOD } from '../interfaces/controller';
 
 export const API = (config: ApiConfig) => {
     return (target: any, propertyKey: string): void => {
@@ -16,4 +15,32 @@ export const API = (config: ApiConfig) => {
 
         target.constructor.prototype.handler.push(controllerHandler);
     }
+}
+
+export const GET = (path: string): ((...args: any) => void) => {
+    return API({
+        method: CONTROLLER_METHOD.GET,
+        path: path
+    });
+}
+
+export const POST = (path: string): ((...args: any) => void) => {
+    return API({
+        method: CONTROLLER_METHOD.POST,
+        path: path
+    });
+}
+
+export const PUT = (path: string): ((...args: any) => void) => {
+    return API({
+        method: CONTROLLER_METHOD.PUT,
+        path: path
+    });
+}
+
+export const DELETE = (path: string): ((...args: any) => void) => {
+    return API({
+        method: CONTROLLER_METHOD.DELETE,
+        path: path
+    });
 }

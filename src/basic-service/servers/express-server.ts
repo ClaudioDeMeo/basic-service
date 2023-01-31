@@ -25,7 +25,7 @@ const DEFAULT_SWAGGER_PATH = '/docs';
 /**
  * @ignore
  */
-const DEFAULT_SWAGGER_LOCATION = 'public';
+const DEFAULT_SWAGGER_LOCATION = 'swagger';
 /**
  * @ignore
  */
@@ -133,6 +133,11 @@ export class ExpressServer implements ServerApplication {
             const handler = controllerHandler.handler;
 
             router[method](path, async(req: any, res: any) => {
+                console.log('Controller:', controller);
+
+                console.log('handler:', handler);
+
+                console.log('controller[handler]:', controller[handler]);
                 const response = await controller[handler](req);
 
                 return res.send(response);

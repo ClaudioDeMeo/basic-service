@@ -15,7 +15,7 @@ export function Controller(name?: string){
 
         server.addController({
             name: name || target.name,
-            instance: new target.constructor(),
+            instance: new target(),
             handler: target.prototype.handler
         });
     }

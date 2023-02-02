@@ -31,9 +31,7 @@
         [
             "@semantic-release/changelog",
             {
-                "changelogFile": "docs/CHANGELOG.md"
-            },
-            {
+                "changelogFile": "docs/CHANGELOG.md",
                 "prepareCmd": "npm run docs"
             }
         ],

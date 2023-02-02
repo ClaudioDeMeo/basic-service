@@ -4,7 +4,7 @@ default:
         - |
             {
                 echo "@experiments72:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
-                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=$NPM_JOB_TOKEN"
+                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${CI_JOB_TOKEN}"
             } | tee -a .npmrc
 
 cache:
@@ -28,7 +28,7 @@ variables:
 stages:
     - install
     - build
-#    - static analysis
+    - static analysis
     - test
     - release
 
@@ -74,13 +74,13 @@ build:
 #         - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.projectKey="${GROUP_NAME}":"${CI_PROJECT_NAME}"
 #     allow_failure: true # or the name of your main branch
 
-# dependencies-scan:
-#     stage: static analysis
-#     allow_failure: true
-#     dependencies:
-#         - build
-#     script:
-#         - npm audit
+dependencies-scan:
+    stage: static analysis
+    dependencies:
+        - build
+    allow_failure: true
+    script:
+        - npm audit
 
 test:
     stage: test

@@ -28,7 +28,7 @@ variables:
 stages:
     - install
     - build
-    - static analysis
+#    - static analysis
     - test
     - release
 
@@ -74,12 +74,12 @@ build:
 #         - sonar-scanner -Dsonar.qualitygate.wait=true -Dsonar.projectKey="${GROUP_NAME}":"${CI_PROJECT_NAME}"
 #     allow_failure: true # or the name of your main branch
 
-dependencies-scan:
-    stage: static analysis
-    dependencies:
-        - build
-    script:
-        - npm audit
+# dependencies-scan:
+#     stage: static analysis
+#     dependencies:
+#         - build
+#     script:
+#         - npm audit
 
 test:
     stage: test

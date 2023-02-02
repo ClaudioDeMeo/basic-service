@@ -101,6 +101,7 @@ publish:
     stage: release
     dependencies:
         - build
+    allow_failure: true
     only:
         - main
     script:

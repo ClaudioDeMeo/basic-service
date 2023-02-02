@@ -4,7 +4,7 @@ default:
         - |
             {
                 echo "@experiments72:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
-                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${NPM_JOB_TOKEN}"
+                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=$NPM_JOB_TOKEN"
             } | tee -a .npmrc
 
 cache:
@@ -76,6 +76,7 @@ build:
 
 # dependencies-scan:
 #     stage: static analysis
+#     allow_failure: true
 #     dependencies:
 #         - build
 #     script:

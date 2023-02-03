@@ -102,6 +102,7 @@ test:
                 path: coverage/cobertura-coverage.xml
 
 publish:
+    extends: .npmrc
     stage: release
     dependencies:
         - build

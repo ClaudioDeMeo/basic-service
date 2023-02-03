@@ -110,7 +110,6 @@ publish:
     only:
         - main
     script:
-        - cat .npmrc
         - npm run docs
         - npx semantic-release
         - cp -r docs public

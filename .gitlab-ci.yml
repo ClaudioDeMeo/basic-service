@@ -107,6 +107,8 @@ publish:
     script:
         - cat .npmrc
         - npm run docs
+        - pwd
+        - ls
         - npx semantic-release
         - cp -r docs public
     artifacts:

@@ -1,9 +1,8 @@
 # Basic Service
 
 [![Latest Release](https://gitlab.com/experiments72/basic-service/-/badges/release.svg)](https://gitlab.com/experiments72/basic-service/-/releases)
-[![pipeline status](https://gitlab.com/experiments72/basic-service/badges/main/pipeline.svg)](https://gitlab.com/experiments72/basic-service/-/commits/main)
 [![coverage report](https://gitlab.com/experiments72/basic-service/badges/main/coverage.svg)](https://gitlab.com/experiments72/basic-service/-/commits/main)
-
+[![semantic-release: node](https://img.shields.io/badge/semantic--release-node-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 This is a basic service module to implement microservices.
 
@@ -13,9 +12,54 @@ Nodejs >= 18
 
 `npm i @experiments72/basic-service`
 
+### Semantic Versioning & Commit Convention
+
+This project follows [semantic versioning](https://semver.org/).
+We release patch versions for critical bugfixes, minor versions for new features or non-essential changes, and major
+versions for any breaking changes.
+
+This project also follows the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) convention with some
+additional customization:
+
+#### Patch version changes
+
+- refactor(optional_scope) - indicates a code refactoring.
+- chore(deps): indicates some dependency has been added / updated and therefore a new release is needed.
+- no-release: indicates the commit shouldn't trigger a release no matter what.
+
 ## Usage
 
-TBD
+### Service bootstrap
+
+Create `BasicService` object and execute `run` method:
+
+```
+import { BasicService } from '../../src';
+
+const pingService = new BasicService({port: 3000});
+
+pingService.run(() => {
+    console.log('server listen on port 3000');
+});
+```
+
+### Create a controller
+
+Create a class and use `Controller` and `API` decorators:
+
+```
+import { Controller, GET } from '../../src';
+
+@Controller('ping')
+export class PingController{
+
+    @GET('/ping')
+    public ping(): string{
+        return 'pong';
+    }
+
+}
+```
 
 ## Useful commands
 

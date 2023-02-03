@@ -106,7 +106,7 @@ publish:
         - main
     script:
         - cat .npmrc
-        - ls coverage
+        - pwd
         - ls docs
         - npm run docs
         - npx semantic-release

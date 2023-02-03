@@ -89,6 +89,7 @@ test:
         - npm run test:ci
     coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
     artifacts:
+        untracked: true
         when: always
         reports:
             junit:
@@ -101,17 +102,20 @@ publish:
     stage: release
     dependencies:
         - build
+        - test
     allow_failure: true
     only:
         - main
     script:
         - cat .npmrc
-        - npm run docs
-        - pwd
         - ls
+        - npm run docs
+        - ls
+        - ls docs
         - npx semantic-release
         - cp -r docs public
     artifacts:
+        untracked: true
         paths:
             - public
 

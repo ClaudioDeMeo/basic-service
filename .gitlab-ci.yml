@@ -102,7 +102,6 @@ test:
                 path: coverage/cobertura-coverage.xml
 
 publish:
-    extends: .npmrc
     stage: release
     dependencies:
         - build
@@ -116,7 +115,6 @@ publish:
         - npx semantic-release
         - cp -r docs public
     artifacts:
-        untracked: true
         paths:
             - public
 

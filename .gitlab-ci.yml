@@ -79,7 +79,7 @@ dependencies-scan:
     dependencies:
         - build
     script:
-        - npm audit
+        - npm audit --omit=dev
 
 test:
     stage: test
@@ -106,4 +106,10 @@ publish:
         - main
     script:
         - cat .npmrc
+        - npm run docs
         - npx semantic-release
+        - cp -r docs public
+    artifacts:
+        paths:
+            - public
+

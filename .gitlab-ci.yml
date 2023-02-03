@@ -8,7 +8,7 @@ cache:
 
 variables:
     NPM_TOKEN: ${CI_JOB_TOKEN}
-    GITLAB_TOKEN: ${CI_JOB_TOKEN}
+    GITLAB_TOKEN: ${GITLAB_PUSH_TOKEN}
 
 .npmrc:
     before_script:

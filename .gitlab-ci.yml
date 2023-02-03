@@ -106,8 +106,6 @@ publish:
         - main
     script:
         - cat .npmrc
-        - pwd
-        - ls docs
         - npm run docs
         - npx semantic-release
         - cp -r docs public

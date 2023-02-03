@@ -7,7 +7,7 @@ cache:
         - .npm/
 
 variables:
-    NPM_TOKEN: ${CI_JOB_TOKEN}
+    NPM_TOKEN: ${GITLAB_PROJECT_TOKEN}
     GITLAB_TOKEN: ${GITLAB_PROJECT_TOKEN}
 
 .npmrc:
@@ -15,7 +15,7 @@ variables:
         - |
             {
                 echo "@experiments72:registry=${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"
-                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${CI_JOB_TOKEN}"
+                echo "${CI_API_V4_URL#https?:\/\//}/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=\${GITLAB_PROJECT_TOKEN}"
             } | tee -a .npmrc
 
 .dependencies_cache:

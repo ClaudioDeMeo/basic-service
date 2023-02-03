@@ -107,7 +107,6 @@ publish:
     dependencies:
         - build
         - test
-    allow_failure: true
     only:
         - main
     script:

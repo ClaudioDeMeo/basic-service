@@ -69,4 +69,3 @@ export class PingController{
 * `npm run watch`   watch for changes and compile
 * `npm run test`    perform the jest unit tests
 * `npm run lint`    perform the eslint linter
-

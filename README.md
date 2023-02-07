@@ -2,7 +2,7 @@
 
 [![Latest Release](https://gitlab.com/experiments72/basic-service/-/badges/release.svg)](https://gitlab.com/experiments72/basic-service/-/releases)
 [![coverage report](https://gitlab.com/experiments72/basic-service/badges/main/coverage.svg)](https://gitlab.com/experiments72/basic-service/-/commits/main)
-[![semantic-release: node](https://img.shields.io/badge/semantic--release-node-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![semantic-release: 📦🚀](https://img.shields.io/badge/semantic--release-📦🚀-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 This is a basic service module to implement microservices.
 

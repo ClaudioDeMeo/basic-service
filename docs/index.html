@@ -33,15 +33,48 @@
 
 <h1 id="basic-service">Basic Service</h1>
 <p><a href="https://gitlab.com/experiments72/basic-service/-/releases"><img src="https://gitlab.com/experiments72/basic-service/-/badges/release.svg" alt="Latest Release" class="img-responsive"></a>
-<a href="https://gitlab.com/experiments72/basic-service/-/commits/main"><img src="https://gitlab.com/experiments72/basic-service/badges/main/pipeline.svg" alt="pipeline status" class="img-responsive"></a>
-<a href="https://gitlab.com/experiments72/basic-service/-/commits/main"><img src="https://gitlab.com/experiments72/basic-service/badges/main/coverage.svg" alt="coverage report" class="img-responsive"></a></p>
+<a href="https://gitlab.com/experiments72/basic-service/-/commits/main"><img src="https://gitlab.com/experiments72/basic-service/badges/main/coverage.svg" alt="coverage report" class="img-responsive"></a>
+<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/semantic--release-📦🚀-e10079?logo=semantic-release" alt="semantic-release: 📦🚀" class="img-responsive"></a>
+<a href="https://conventionalcommits.org"><img src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg" alt="Conventional Commits" class="img-responsive"></a>
+<a href="https://nodejs.org/dist/latest-v18.x/docs/api/"><img src="https://img.shields.io/badge/Node-%3E%3D%2018.x%20LTS-brightgreen.svg" alt="Node LTS" class="img-responsive"></a></p>
 <p>This is a basic service module to implement microservices.</p>
 <h2 id="installation--requirements">Installation / Requirements</h2>
 <p>Nodejs &gt;= 18</p>
 <p><code>npm i @experiments72/basic-service</code></p>
+<h3 id="semantic-versioning--commit-convention">Semantic Versioning &amp; Commit Convention</h3>
+<p>This project follows <a href="https://semver.org/">semantic versioning</a>.
+We release patch versions for critical bugfixes, minor versions for new features or non-essential changes, and major
+versions for any breaking changes.</p>
+<p>This project also follows the <a href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commit</a> convention with some
+additional customization:</p>
+<h4 id="patch-version-changes">Patch version changes</h4>
+<ul>
+<li>refactor(optional_scope) - indicates a code refactoring.</li>
+<li>chore(deps): indicates some dependency has been added / updated and therefore a new release is needed.</li>
+<li>no-release: indicates the commit shouldn&#39;t trigger a release no matter what.</li>
+</ul>
 <h2 id="usage">Usage</h2>
-<p>TBD</p>
-<h2 id="useful-commands">Useful commands</h2>
+<h3 id="service-bootstrap">Service bootstrap</h3>
+<p>Create <code>BasicService</code> object and execute <code>run</code> method:</p>
+<div><pre class="line-numbers"><code class="language-none">import { BasicService } from &#39;../../src&#39;;
+
+const pingService = new BasicService({port: 3000});
+
+pingService.run(() =&gt; {
+    console.log(&#39;server listen on port 3000&#39;);
+});</code></pre></div><h3 id="create-a-controller">Create a controller</h3>
+<p>Create a class and use <code>Controller</code> and <code>API</code> decorators:</p>
+<div><pre class="line-numbers"><code class="language-none">import { Controller, GET } from &#39;../../src&#39;;
+
+&#64;Controller(&#39;ping&#39;)
+export class PingController{
+
+    &#64;GET(&#39;/ping&#39;)
+    public ping(): string{
+        return &#39;pong&#39;;
+    }
+
+}</code></pre></div><h2 id="useful-commands">Useful commands</h2>
 <ul>
 <li><code>npm run build</code>   compile typescript to js</li>
 <li><code>npm run watch</code>   watch for changes and compile</li>

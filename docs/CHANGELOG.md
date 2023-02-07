@@ -1,3 +1,10 @@
+## [1.0.1](https://gitlab.com/experiments72/basic-service/compare/v1.0.0...v1.0.1) (2023-02-07)
+
+
+### Bug Fixes
+
+* fixed docs generation ([c5c886f](https://gitlab.com/experiments72/basic-service/commit/c5c886f674751cae99a303fdb7b76989a6ea9b0d))
+
 # 1.0.0 (2023-02-03)
 
 

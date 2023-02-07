@@ -3,6 +3,8 @@
 [![Latest Release](https://gitlab.com/experiments72/basic-service/-/badges/release.svg)](https://gitlab.com/experiments72/basic-service/-/releases)
 [![coverage report](https://gitlab.com/experiments72/basic-service/badges/main/coverage.svg)](https://gitlab.com/experiments72/basic-service/-/commits/main)
 [![semantic-release: 📦🚀](https://img.shields.io/badge/semantic--release-📦🚀-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-blue.svg)](https://conventionalcommits.org)
+[![Node LTS](https://img.shields.io/badge/Node-%3E%3D%2018.x%20LTS-brightgreen.svg)](https://nodejs.org/dist/latest-v18.x/docs/api/)
 
 This is a basic service module to implement microservices.
 

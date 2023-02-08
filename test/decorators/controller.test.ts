@@ -1,4 +1,4 @@
-import { Server } from '../../src/basic-service/server';
+import { ServerSingleton } from '../../src/basic-service/server-singleton';
 import { API, Controller } from '../../src/decorators'
 import { CONTROLLER_METHOD } from '../../src/interfaces';
 import { ServerApplication } from '../../src/interfaces/server-application';
@@ -7,16 +7,16 @@ describe('decorators', (): void => {
     describe('@Controller', (): void => {
 
         beforeEach((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add the controller into server', (): void => {
@@ -27,7 +27,7 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (Server as any).app;
+            const serverApplication: ServerApplication = (ServerSingleton as any).app;
 
             const routerControllerMap = (serverApplication as any).routerControllerMap;
 
@@ -46,7 +46,7 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (Server as any).app;
+            const serverApplication: ServerApplication = (ServerSingleton as any).app;
 
             const routerControllerMap = (serverApplication as any).routerControllerMap;
 
@@ -72,7 +72,7 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (Server as any).app;
+            const serverApplication: ServerApplication = (ServerSingleton as any).app;
 
             const routerControllerMap = (serverApplication as any).routerControllerMap;
 

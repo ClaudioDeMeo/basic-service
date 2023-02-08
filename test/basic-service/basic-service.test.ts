@@ -1,5 +1,5 @@
 import { BasicService } from '../../src';
-import { Server } from '../../src/basic-service/server';
+import { ServerSingleton } from '../../src/basic-service/server-singleton';
 import { ServerApplication } from '../../src/interfaces/server-application';
 
 describe('basic-service', (): void => {
@@ -17,7 +17,7 @@ describe('basic-service', (): void => {
                 prepareSwagger: jest.fn(),
             };
 
-            jest.spyOn(Server, 'getInstance').mockReturnValue(serverApplicationMock);
+            jest.spyOn(ServerSingleton, 'getInstance').mockReturnValue(serverApplicationMock);
         });
 
 
@@ -55,7 +55,7 @@ describe('basic-service', (): void => {
         describe('.run()', (): void => {
 
             beforeAll((): void => {
-                const app = Server.getInstance();
+                const app = ServerSingleton.getInstance();
                 app.close();
             });
 

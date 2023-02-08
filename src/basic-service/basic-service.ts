@@ -1,6 +1,6 @@
 import { ServiceConfig } from '../interfaces';
 import { ServerApplication } from '../interfaces/server-application';
-import { Server } from './server';
+import { ServerSingleton } from './server-singleton';
 
 /**
  * Rappresents the basic class to build a microservice. Just use this class or extend it to create a new service and execute the method run to start it.
@@ -25,7 +25,7 @@ export class BasicService{
             this.serviceConfig = serviceConfig;
         }
 
-        this.server = Server.getInstance();
+        this.server = ServerSingleton.getInstance();
 
         if (this.serviceConfig?.swagger !== false){
             this.server.prepareSwagger(serviceConfig?.docsPath, serviceConfig?.swaggerLocation);

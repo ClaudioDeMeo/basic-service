@@ -1,21 +1,21 @@
 import { Service } from '../../src/decorators';
 import { ServiceConfig } from '../../src/interfaces';
 import { BasicService } from '../../src'
-import { Server } from '../../src/basic-service/server';
+import { ServerSingleton } from '../../src/basic-service/server-singleton';
 
 describe('decorators', (): void => {
     describe('@Service', (): void => {
 
         beforeEach((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should initialize the BasicService with the given config', (): void => {

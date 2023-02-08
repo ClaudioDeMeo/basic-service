@@ -1,4 +1,3 @@
-import { Server } from 'http';
 import request from 'supertest';
 import { ExpressServer } from '../../../src/basic-service/servers/express-server';
 import { Controller, ControllerHandler, CONTROLLER_METHOD } from '../../../src/interfaces/controller';

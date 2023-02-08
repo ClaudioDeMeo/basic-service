@@ -1,4 +1,4 @@
-import { Server } from '../../src/basic-service/server';
+import { ServerSingleton } from '../../src/basic-service/server-singleton';
 import { API, DELETE, GET, POST, PUT } from '../../src/decorators'
 import { CONTROLLER_METHOD } from '../../src/interfaces';
 
@@ -6,9 +6,9 @@ describe('decorators', (): void => {
     describe('@API', (): void => {
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add handler to the controller', (): void => {
@@ -39,9 +39,9 @@ describe('decorators', (): void => {
     describe('@GET', (): void => {
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add handler to the controller', (): void => {
@@ -63,9 +63,9 @@ describe('decorators', (): void => {
     describe('@POST', (): void => {
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add handler to the controller', (): void => {
@@ -87,9 +87,9 @@ describe('decorators', (): void => {
     describe('@PUT', (): void => {
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add handler to the controller', (): void => {
@@ -111,9 +111,9 @@ describe('decorators', (): void => {
     describe('@DELETE', (): void => {
 
         afterAll((): void => {
-            const app = Server.getInstance();
+            const app = ServerSingleton.getInstance();
             app.close();
-            (Server as any).app = undefined;
+            (ServerSingleton as any).app = undefined;
         });
 
         it('should add handler to the controller', (): void => {

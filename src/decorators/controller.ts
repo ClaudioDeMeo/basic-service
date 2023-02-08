@@ -1,4 +1,4 @@
-import { Server } from '../basic-service/server';
+import { ServerSingleton } from '../basic-service/server-singleton';
 
 /**
  * Decorator that marks a class as a controller.
@@ -9,7 +9,7 @@ import { Server } from '../basic-service/server';
  */
 export function Controller(name?: string){
     return (target: any): void => {
-        const server = Server.getInstance();
+        const server = ServerSingleton.getInstance();
 
         target.prototype.id = name || target.name;
 

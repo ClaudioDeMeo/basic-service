@@ -121,11 +121,9 @@ docs:
 publish:
     extends: .npmrc
     stage: release
-    dependencies:
-        - build
     needs:
-        - job: docs
-          artifacts: true
+        - build
+        - docs
     only:
         - main
     script:

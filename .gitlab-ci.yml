@@ -38,7 +38,7 @@ install:
     extends: .dependencies_cache
     stage: install
     script:
-        - npm ci
+        - npm ci --cache .npm --prefer-offline
     cache:
         policy: pull-push
     artifacts:
@@ -104,25 +104,19 @@ build:
     script:
         - npm run build
 
-.docs:
+publish:
     extends: .npmrc
     stage: release
     dependencies:
         - install
         - test
-    before_script:
-        - npm run docs
-
-publish:
-    extends: .docs
-    stage: release
-    dependencies:
         - build
     only:
         - main
     script:
-        - npx semantic-release
+        - npm run docs
         - cp -r docs public
+        - npx semantic-release
     artifacts:
         paths:
             - public

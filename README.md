@@ -9,12 +9,6 @@
 
 This is a basic service module to implement microservices.
 
-## Installation / Requirements
-
-Nodejs >= 18
-
-`npm i @experiments72/basic-service`
-
 ### Semantic Versioning & Commit Convention
 
 This project follows [semantic versioning](https://semver.org/).
@@ -29,6 +23,13 @@ additional customization:
 - refactor(optional_scope) - indicates a code refactoring.
 - chore(deps): indicates some dependency has been added / updated and therefore a new release is needed.
 - no-release: indicates the commit shouldn't trigger a release no matter what.
+
+
+## Installation / Requirements
+
+Nodejs >= 18
+
+`npm i @experiments72/basic-service`
 
 ## Usage
 

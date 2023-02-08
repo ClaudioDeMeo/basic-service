@@ -104,26 +104,20 @@ build:
     script:
         - npm run build
 
-docs:
+.docs:
+    extends: .npmrc
     stage: release
     dependencies:
         - install
         - test
-    only:
-        - main
-    script:
+    before_script:
         - npm run docs
-    artifacts:
-        untracked: true
-        paths:
-            - docs
 
 publish:
-    extends: .npmrc
+    extends: .docs
     stage: release
     needs:
         - build
-        - docs
     only:
         - main
     script:

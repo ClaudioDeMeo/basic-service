@@ -60,7 +60,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/ExpressServer.html" data-type="entity-link" >ExpressServer</a>
                             </li>
                             <li class="link">
-                                <a href="classes/Server.html" data-type="entity-link" >Server</a>
+                                <a href="classes/ServerFactory.html" data-type="entity-link" >ServerFactory</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/ServerSingleton.html" data-type="entity-link" >ServerSingleton</a>
                             </li>
                         </ul>
                     </li>

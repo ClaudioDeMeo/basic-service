@@ -319,7 +319,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ServiceConfig } from &#x27;../interfaces&#x27;;
 import { ServerApplication } from &#x27;../interfaces/server-application&#x27;;
-import { Server } from &#x27;./server&#x27;;
+import { ServerSingleton } from &#x27;./server-singleton&#x27;;
 
 /**
  * Rappresents the basic class to build a microservice. Just use this class or extend it to create a new service and execute the method run to start it.
@@ -344,7 +344,7 @@ export class BasicService{
             this.serviceConfig &#x3D; serviceConfig;
         }
 
-        this.server &#x3D; Server.getInstance();
+        this.server &#x3D; ServerSingleton.getInstance();
 
         if (this.serviceConfig?.swagger !&#x3D;&#x3D; false){
             this.server.prepareSwagger(serviceConfig?.docsPath, serviceConfig?.swaggerLocation);

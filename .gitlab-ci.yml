@@ -116,7 +116,7 @@ build:
 publish:
     extends: .docs
     stage: release
-    needs:
+    dependencies:
         - build
     only:
         - main

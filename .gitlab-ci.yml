@@ -30,9 +30,8 @@ variables:
 
 stages:
     - install
+    - analysis
     - build
-    - static analysis
-    - test
     - release
 
 install:
@@ -48,20 +47,14 @@ install:
             - node_modules
 
 lint:
-    stage: build
+    stage: analysis
+    dependencies:
+        - instal
     script:
         - npm run lint
 
-build:
-    stage: build
-    artifacts:
-        untracked: true
-        name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
-    script:
-        - npm run build
-
 # sonarqube:
-#     stage: static analysis
+#     stage: analysis
 #     image:
 #         name: sonarsource/sonar-scanner-cli:latest
 #         entrypoint: [""]
@@ -78,16 +71,16 @@ build:
 #     allow_failure: true # or the name of your main branch
 
 dependencies-scan:
-    stage: static analysis
+    stage: analysis
     dependencies:
-        - build
+        - instal
     script:
         - npm audit --omit=dev
 
 test:
-    stage: test
+    stage: analysis
     dependencies:
-        - build
+        - instal
     script:
         - npm run test:ci
     coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
@@ -101,16 +94,41 @@ test:
                 coverage_format: cobertura
                 path: coverage/cobertura-coverage.xml
 
-publish:
-    extends: .npmrc
+build:
+    stage: build
+    dependencies:
+        - install
+    artifacts:
+        untracked: true
+        name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    script:
+        - npm run build
+
+docs:
     stage: release
     dependencies:
-        - build
+        - install
         - test
     only:
         - main
     script:
         - npm run docs
+    artifacts:
+        untracked: true
+        paths:
+            - docs
+
+publish:
+    extends: .npmrc
+    stage: release
+    dependencies:
+        - build
+        - docs
+    needs:
+        - docs
+    only:
+        - main
+    script:
         - npx semantic-release
         - cp -r docs public
     artifacts:

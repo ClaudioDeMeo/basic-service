@@ -123,9 +123,9 @@ publish:
     stage: release
     dependencies:
         - build
-        - docs
     needs:
-        - docs
+        - job: docs
+          artifacts: true
     only:
         - main
     script:
@@ -134,4 +134,3 @@ publish:
     artifacts:
         paths:
             - public
-

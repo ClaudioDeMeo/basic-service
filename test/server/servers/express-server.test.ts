@@ -1,7 +1,8 @@
 import request from 'supertest';
-import { ExpressServer } from '../../../src/basic-service/servers/express-server';
-import { Controller, ControllerHandler, CONTROLLER_METHOD } from '../../../src/interfaces/controller';
-import { ServerApplication } from '../../../src/interfaces/server-application';
+import { BasicController } from '../../../src';
+import { Controller, ControllerHandler, CONTROLLER_METHOD } from '../../../src/basic-controller/interfaces';
+import { ServerApplication } from '../../../src/server/interfaces';
+import { ExpressServer } from '../../../src/server/servers/express-server';
 
 describe('basic-service', (): void => {
     describe('servers', (): void => {
@@ -100,7 +101,7 @@ describe('basic-service', (): void => {
                 });
             });
 
-            describe('.prepareSwagger()', (): void => {
+            describe('.addSwagger()', (): void => {
 
                 let expressServer: ServerApplication;
                 beforeAll((): void => {
@@ -113,7 +114,7 @@ describe('basic-service', (): void => {
                 });
 
                 it('shuld add a swagger', async (): Promise<void> =>{
-                    expressServer.prepareSwagger();
+                    expressServer.addSwagger();
 
                     const app = (expressServer as any).app;
                     const res = await request(app).get('/docs/');
@@ -124,7 +125,7 @@ describe('basic-service', (): void => {
                 it('shuld add a swagger with custom path and location', async (): Promise<void> =>{
                     const path = '/test/';
                     const location = 'test'
-                    expressServer.prepareSwagger(path, location);
+                    expressServer.addSwagger(path, location);
 
                     const app = (expressServer as any).app;
                     const res = await request(app).get(path);
@@ -137,14 +138,6 @@ describe('basic-service', (): void => {
 
                 let expressServer: ServerApplication;
 
-                const controllerResult = 'TEST';
-
-                class TestController {
-                    public get() {
-                        return controllerResult;
-                    }
-                }
-
                 beforeAll((): void => {
                     expressServer = new ExpressServer();
                     expressServer.listen(3000);
@@ -152,86 +145,28 @@ describe('basic-service', (): void => {
 
                 afterAll((): void => {
                     expressServer.close();
-                });
-
-                it('should add an express router', async(): Promise<void> =>{
-                    const controller: Controller = {
-                        name: 'test',
-                        instance: new TestController()
-                    };
-
-                    expressServer.addController(controller);
-
-                    const path = '/test';
-                    const routerControllerMap = (expressServer as any).routerControllerMap;
-                    routerControllerMap[controller.name].router.get(path, async(_req: any, res: any) => {
-                        const response = await controller.instance.get();
-                        return res.send(response);
-                    });
-
-                    const app = (expressServer as any).app;
-                    const res = await request(app).get(path);
-                    expect(res.text).toBe(controllerResult);
                 });
 
                 it('should add an express router and a route automatically', async(): Promise<void> =>{
                     const path = '/testcontrollerwithhandler';
-                    const testController = new TestController();
-                    const controller: Controller = {
-                        name: 'handler',
-                        instance: testController,
-                        handler: [
-                            {
-                                method: CONTROLLER_METHOD.GET,
-                                path: path,
-                                handler: 'get'
-                            }
-                        ]
-                    };
+                    const controllerResult = 'TEST';
+                    class TestController extends BasicController {
 
-                    expressServer.addController(controller);
+                        public id: string = 'test';
 
-                    const app = (expressServer as any).app;
-                    const res = await request(app).get(path);
-                    expect(res.text).toBe(controllerResult);
-                });
-            });
+                        public handlers: ControllerHandler[] = [{
+                            method: CONTROLLER_METHOD.GET,
+                            path: path,
+                            handler: 'get'
+                        }];
 
-            describe('.addControllerHandler()', (): void => {
-                let expressServer: ServerApplication;
-
-                const controllerResult = 'TEST';
-                class TestController {
-                    public get() {
-                        return controllerResult;
+                        public get() {
+                            return controllerResult;
+                        }
                     }
-                }
+                    const testController = new TestController();
 
-                const testController = new TestController();
-                const controller: Controller = {
-                    name: 'test',
-                    instance: testController
-                };
-
-                beforeAll((): void => {
-                    expressServer = new ExpressServer();
-                    expressServer.listen(3000);
-                    expressServer.addController(controller);
-                });
-
-                afterAll((): void => {
-                    expressServer.close();
-                });
-
-                it('should add a new route', async(): Promise<void> => {
-                    const path = '/testcontrollerwithhandler';
-                    const controllerHandler: ControllerHandler = {
-                        method: CONTROLLER_METHOD.GET,
-                        path: path,
-                        handler: 'get'
-                    };
-
-                    expressServer.addControllerHandlers(controller.name, controllerHandler);
+                    expressServer.addController(testController);
 
                     const app = (expressServer as any).app;
                     const res = await request(app).get(path);

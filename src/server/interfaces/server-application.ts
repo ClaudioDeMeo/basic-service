@@ -1,4 +1,4 @@
-import { Controller, ControllerHandler } from './controller';
+import { Controller } from '../../basic-controller/interfaces';
 
 /**
  * Rappresent the Server application.
@@ -38,19 +38,11 @@ export interface ServerApplication {
     addController(controller: Controller): void;
 
     /**
-     * Add one or more API controller handlers.
-     *
-     * @param {string} controllerid - the controller id.
-     * @param {(ControllerHandler | ControllerHandler[])} controllerHandler - one or more handlers.
-     */
-    addControllerHandlers(controllerid: string, controllerHandler: ControllerHandler | ControllerHandler[]): void;
-
-    /**
      * Expose the swagger API.
      *
      * @param {string} [path] - the path of the swagger api.
      * @param {string} [location] -  the direcotry of the swagger.
      */
-    prepareSwagger(path?: string, location?: string): void;
+    addSwagger(path?: string, location?: string): void;
 
 }

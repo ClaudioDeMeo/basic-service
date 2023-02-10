@@ -1,4 +1,4 @@
-import { ServerApplication } from '../interfaces/server-application';
+import { ServerApplication } from './interfaces';
 import { ServerFactory, SERVER_TYPE } from './server-factory';
 
 /**
@@ -6,9 +6,21 @@ import { ServerFactory, SERVER_TYPE } from './server-factory';
  *
  * @abstract
  */
-export class ServerSingleton{
+export abstract class ServerSingleton{
 
     private static app: ServerApplication;
+    private static factory: ServerFactory = new ServerFactory();
+
+    /**
+     * Allow to set the factory class to use to build the server application.
+     *
+     * @static
+     */
+    public static useFactory<T extends ServerFactory>(factory: T): void {
+        if (!this.app){
+            this.factory = factory;
+        }
+    }
 
     /**
      * Singleton method that return the unique server application instance.
@@ -19,7 +31,7 @@ export class ServerSingleton{
      */
     public static getInstance(type: SERVER_TYPE = SERVER_TYPE.EXPRESS): ServerApplication{
         if (!this.app){
-            this.app = ServerFactory.createServer(type);
+            this.app = this.factory.createServer(type);
         }
 
         return this.app;

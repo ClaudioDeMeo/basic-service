@@ -1,22 +1,18 @@
-import { ServerSingleton } from '../basic-service/server-singleton';
+import { ServerSingleton } from '../server';
 
 /**
  * Decorator that marks a class as a controller.
  *
- * @param {string} [name] - The name of the controller. Will be used as router. If not provided will be used the name of the class.
+ * @param {string} [id] - The name of the controller. Will be used as router. If not provided will be used the name of the class.
  *
  * @return {Function}
  */
-export function Controller(name?: string){
+export function Controller(id?: string){
     return (target: any): void => {
         const server = ServerSingleton.getInstance();
 
-        target.prototype.id = name || target.name;
+        target.prototype.id = id || target.name;
 
-        server.addController({
-            name: name || target.name,
-            instance: new target(),
-            handler: target.prototype.handler
-        });
+        server.addController(new target());
     }
 }

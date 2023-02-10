@@ -1,29 +1,4 @@
 /**
- * The controller structure.
- *
- * @property {string} name
- * @property {any} instance
- * @property {ControllerHandler[]} [handler]
- */
-export interface Controller {
-
-    /**
-     * The controller name.
-     */
-    name: string;
-
-    /**
-     * The controller instance
-     */
-    instance: any;
-
-    /**
-     * The handlers' list.
-     */
-    handler?: ControllerHandler[];
-}
-
-/**
  * Contains the available verbs for the service.
  * @enum {string}
  */
@@ -36,6 +11,32 @@ export enum CONTROLLER_METHOD {
     PUT = 'put',
     /** @value delete */
     DELETE = 'delete'
+}
+
+/**
+ * @ignore
+ */
+export interface ActionsDictionary {
+    [actionName: string]: any;
+}
+
+/**
+ * The controller structure.
+ *
+ * @property {string} name
+ * @property {ControllerHandler[]} [handler]
+ */
+export interface Controller extends ActionsDictionary{
+
+    /**
+     * The controller name.
+     */
+    id: string;
+
+    /**
+     * The handlers' list.
+     */
+    handlers?: ControllerHandler[];
 }
 
 /**
@@ -60,5 +61,5 @@ export interface ControllerHandler {
     /**
      * The handler name.
      */
-    handler: string;
+    handler: keyof ActionsDictionary;
 }

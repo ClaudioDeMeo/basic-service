@@ -15,6 +15,4 @@ export class PingController{
 
 const pingService = new BasicService({port: 3000});
 
-pingService.run(() => {
-    console.log('server listen on port 3000');
-});
+pingService.listen();

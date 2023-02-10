@@ -1,9 +1,10 @@
 import express, { Application, Router } from 'express';
 import morgan from 'morgan';
-import { Controller, ControllerHandler } from '../../interfaces/controller';
-import { ServerApplication } from '../../interfaces/server-application';
 import swaggerUi from 'swagger-ui-express';
 import { Server } from 'http';
+
+import { ServerApplication } from '../interfaces';
+import { Controller, ControllerHandler } from '../../basic-controller/interfaces/controller';
 
 /**
  * Router/Controller Dictionary
@@ -85,14 +86,14 @@ export class ExpressServer implements ServerApplication {
      * @param {Controller} controller
      */
     public addController(controller: Controller): void {
-        if (this.routerControllerMap[controller.name]) {
+        if (this.routerControllerMap[controller.id]) {
             throw new Error('controller already presents');
         }
 
         const router = this.createRouterForController(controller);
 
-        if (controller.handler) {
-            this.addControllerHandlers(controller.name, controller.handler);
+        if (controller.handlers) {
+            this.addControllerHandlers(controller.id, controller.handlers);
         }
 
         this.app.use(router);
@@ -101,7 +102,7 @@ export class ExpressServer implements ServerApplication {
     private createRouterForController(controller: Controller): Router {
         const router = express.Router();
 
-        this.routerControllerMap[controller.name] = {
+        this.routerControllerMap[controller.id] = {
             router: router,
             controller: controller
         };
@@ -109,13 +110,7 @@ export class ExpressServer implements ServerApplication {
         return router;
     }
 
-    /**
-     * Add one or more API controller handlers.
-     *
-     * @param {string} controllerid - the controller id.
-     * @param {(ControllerHandler | ControllerHandler[])} controllerHandler - one or more handlers.
-     */
-    public addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
+    private addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
         if (!this.routerControllerMap[controllerid]) {
             throw new Error('controller not found');
         }
@@ -125,7 +120,7 @@ export class ExpressServer implements ServerApplication {
         }
 
         const router = this.routerControllerMap[controllerid].router;
-        const controller = this.routerControllerMap[controllerid].controller.instance;
+        const controller = this.routerControllerMap[controllerid].controller;
 
         controllerHandlers.forEach((controllerHandler: ControllerHandler): void => {
             const method = controllerHandler.method;
@@ -133,22 +128,17 @@ export class ExpressServer implements ServerApplication {
             const handler = controllerHandler.handler;
 
             router[method](path, async(req: any, res: any) => {
-                console.log('Controller:', controller);
-
-                console.log('handler:', handler);
-
-                console.log('controller[handler]:', controller[handler]);
-                const response = await controller[handler](req);
+                const response = await controller[handler]?.(req);
 
                 return res.send(response);
             });
 
-            if (!this.routerControllerMap[controllerid].controller.handler){
-                this.routerControllerMap[controllerid].controller.handler = [];
+            if (!this.routerControllerMap[controllerid].controller.handlers){
+                this.routerControllerMap[controllerid].controller.handlers = [];
             }
 
-            if (this.routerControllerMap[controllerid].controller.handler?.indexOf(controllerHandler) === -1){
-                this.routerControllerMap[controllerid].controller.handler?.push(controllerHandler);
+            if (this.routerControllerMap[controllerid].controller.handlers?.indexOf(controllerHandler) === -1){
+                this.routerControllerMap[controllerid].controller.handlers?.push(controllerHandler);
             }
         });
     }
@@ -159,7 +149,7 @@ export class ExpressServer implements ServerApplication {
      * @param {string} [path] - the path of the swagger api.
      * @param {string} [location] -  the direcotry of the swagger.
      */
-    public prepareSwagger(path: string = DEFAULT_SWAGGER_PATH, location: string = DEFAULT_SWAGGER_LOCATION): void {
+    public addSwagger(path: string = DEFAULT_SWAGGER_PATH, location: string = DEFAULT_SWAGGER_LOCATION): void {
         this.app.use(express.static(location));
         this.app.use(
             path,

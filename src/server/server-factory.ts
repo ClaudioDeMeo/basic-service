@@ -1,4 +1,4 @@
-import { ServerApplication } from '../interfaces/server-application';
+import { ServerApplication } from './interfaces';
 import { ExpressServer } from './servers/express-server';
 
 /**
@@ -17,13 +17,11 @@ enum SERVER_METHOD {
 }
 
 /**
- * Abstract static factory class to create a server application.
- *
- * @abstract
+ * Static factory class to create a server application.
  */
-export abstract class ServerFactory {
+export class ServerFactory {
 
-    private static createExpressServer(): ServerApplication {
+    private createExpressServer(): ServerApplication {
         return new ExpressServer();
     }
 
@@ -34,8 +32,8 @@ export abstract class ServerFactory {
      * @param {SERVER_TYPE} [type=SERVER_TYPE.EXPRESS]
      * @return {ServerApplication}
      */
-    public static createServer(type: SERVER_TYPE = SERVER_TYPE.EXPRESS): ServerApplication {
-        return this[SERVER_METHOD[type]]();
+    public createServer(type: SERVER_TYPE = SERVER_TYPE.EXPRESS): ServerApplication {
+        return this[SERVER_METHOD[type || SERVER_TYPE.EXPRESS]]();
     }
 
 }

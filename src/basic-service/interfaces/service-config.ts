@@ -1,3 +1,5 @@
+import { SERVER_TYPE } from '../../server';
+
 /**
  * Rappresents the basic service configuration.
  * @property {string | number} [port]
@@ -26,5 +28,10 @@ export interface ServiceConfig {
      * Allow to enable/disable the swagger api. Default: true.
      */
     swagger?: boolean;
+
+    /**
+     * Set the server application type. Default: EXPRESS
+     */
+    serverType?: SERVER_TYPE
 
 }

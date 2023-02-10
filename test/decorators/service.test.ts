@@ -1,7 +1,6 @@
-import { Service } from '../../src/decorators';
-import { ServiceConfig } from '../../src/interfaces';
-import { BasicService } from '../../src'
-import { ServerSingleton } from '../../src/basic-service/server-singleton';
+import { BasicService, Service } from '../../src';
+import { ServerSingleton } from '../../src/server';
+import { ServiceConfig } from '../../src/basic-service/interfaces';
 
 describe('decorators', (): void => {
     describe('@Service', (): void => {
@@ -20,6 +19,8 @@ describe('decorators', (): void => {
 
         it('should initialize the BasicService with the given config', (): void => {
 
+            const app = ServerSingleton.getInstance();
+
             const config: ServiceConfig = {
                 port: '3001',
                 docsPath: '/test',
@@ -27,38 +28,18 @@ describe('decorators', (): void => {
                 swagger: true
             }
 
+            const run = jest.fn();
+            const serviceListenSpy = jest.spyOn(BasicService.prototype, 'listen');
+            const appListenSpy = jest.spyOn(app, 'listen');
+
             @Service(config)
             //@ts-ignore
             class Stub extends BasicService{
-
+                protected run = run;
             }
 
-            const stub = new Stub();
-
-            const serviceConfig: ServiceConfig = (stub as any).serviceConfig;
-            expect(serviceConfig).not.toBeUndefined();
-        });
-
-        it('should initialize the BasicService with the given config', (): void => {
-
-            const config: ServiceConfig = {
-                port: '3000',
-                docsPath: '/test',
-                swaggerLocation: 'test',
-                swagger: true
-            };
-
-            const run = jest.spyOn(BasicService.prototype, 'run');
-
-            const runCallback = jest.fn();
-
-            @Service(config, runCallback)
-            //@ts-ignore
-            class Stub extends BasicService{
-
-            }
-
-            expect(run).toBeCalledWith(runCallback);
+            expect(serviceListenSpy).toHaveBeenCalled();
+            expect(appListenSpy).toBeCalledWith('3001', run);
         });
     });
 });

@@ -1,4 +1,4 @@
-import { CONTROLLER_METHOD } from './controller';
+import { CONTROLLER_METHOD } from '../../basic-controller/interfaces';
 
 /**
  * Rappresents the @API decorator's configuration object.

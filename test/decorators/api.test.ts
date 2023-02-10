@@ -1,6 +1,5 @@
-import { ServerSingleton } from '../../src/basic-service/server-singleton';
-import { API, DELETE, GET, POST, PUT } from '../../src/decorators'
-import { CONTROLLER_METHOD } from '../../src/interfaces';
+import { API, CONTROLLER_METHOD, DELETE, GET, POST, PUT } from '../../src';
+import { ServerSingleton } from '../../src/server';
 
 describe('decorators', (): void => {
     describe('@API', (): void => {
@@ -32,7 +31,7 @@ describe('decorators', (): void => {
 
             const controller = new Test();
 
-            expect((controller as any).handler?.length).toBe(2);
+            expect((controller as any).handlers?.length).toBe(2);
         });
     });
 
@@ -55,8 +54,8 @@ describe('decorators', (): void => {
 
             const controller = new Test();
 
-            expect((controller as any).handler?.length).toBe(1);
-            expect((controller as any).handler[0].method).toBe(CONTROLLER_METHOD.GET);
+            expect((controller as any).handlers?.length).toBe(1);
+            expect((controller as any).handlers[0].method).toBe(CONTROLLER_METHOD.GET);
         });
     });
 
@@ -79,8 +78,8 @@ describe('decorators', (): void => {
 
             const controller = new Test();
 
-            expect((controller as any).handler?.length).toBe(1);
-            expect((controller as any).handler[0].method).toBe(CONTROLLER_METHOD.POST);
+            expect((controller as any).handlers?.length).toBe(1);
+            expect((controller as any).handlers[0].method).toBe(CONTROLLER_METHOD.POST);
         });
     });
 
@@ -103,8 +102,8 @@ describe('decorators', (): void => {
 
             const controller = new Test();
 
-            expect((controller as any).handler?.length).toBe(1);
-            expect((controller as any).handler[0].method).toBe(CONTROLLER_METHOD.PUT);
+            expect((controller as any).handlers?.length).toBe(1);
+            expect((controller as any).handlers[0].method).toBe(CONTROLLER_METHOD.PUT);
         });
     });
 
@@ -127,8 +126,8 @@ describe('decorators', (): void => {
 
             const controller = new Test();
 
-            expect((controller as any).handler?.length).toBe(1);
-            expect((controller as any).handler[0].method).toBe(CONTROLLER_METHOD.DELETE);
+            expect((controller as any).handlers?.length).toBe(1);
+            expect((controller as any).handlers[0].method).toBe(CONTROLLER_METHOD.DELETE);
         });
     });
 });

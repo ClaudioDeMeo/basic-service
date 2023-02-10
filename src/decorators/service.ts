@@ -1,4 +1,4 @@
-import { ServiceConfig } from '../interfaces';
+import { ServiceConfig } from '../basic-service/interfaces';
 
 /**
  * Decorator that marks a class as a service. The class must extens `BasicService`
@@ -8,14 +8,12 @@ import { ServiceConfig } from '../interfaces';
  *
  * @return {Function}
  */
-export function Service(serviceConfig: ServiceConfig, run?: () => void){
+export function Service(serviceConfig: ServiceConfig){
     return (target: any): void => {
         target.prototype.serviceConfig = serviceConfig;
 
-        if (run){
-            const service = new target.prototype.constructor(serviceConfig);
+        const service = new target.prototype.constructor(serviceConfig);
 
-            service.run(run);
-        }
+        service.listen();
     }
 }

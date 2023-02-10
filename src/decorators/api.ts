@@ -1,5 +1,5 @@
-import { ApiConfig } from '../interfaces'
-import { ControllerHandler, CONTROLLER_METHOD } from '../interfaces/controller';
+import { ApiConfig } from './interfaces';
+import { ControllerHandler, CONTROLLER_METHOD } from '../basic-controller/interfaces';
 
 /**
  * Decorator that marks a method as an API.
@@ -16,11 +16,11 @@ export function API(config: ApiConfig){
             handler: propertyKey
         };
 
-        if (!target.constructor.prototype.handler){
-            target.constructor.prototype.handler = [];
+        if (!target.constructor.prototype.handlers){
+            target.constructor.prototype.handlers = [];
         }
 
-        target.constructor.prototype.handler.push(controllerHandler);
+        target.constructor.prototype.handlers.push(controllerHandler);
     }
 }
 

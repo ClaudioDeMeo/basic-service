@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/basic-service/server-singleton.ts</code>
+            <code>src/server/server-singleton.ts</code>
         </p>
 
 
@@ -93,6 +93,10 @@
                             <li>
                                     <span class="modifier">Static</span>
                                 <a href="#getInstance" >getInstance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#useFactory" >useFactory</a>
                             </li>
                         </ul>
                     </td>
@@ -135,8 +139,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">src/basic-service/server-singleton.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/server/server-singleton.ts:32</a></div>
                 </td>
             </tr>
 
@@ -190,6 +194,87 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="useFactory"></a>
+                    <span class="name">
+                        <span class="modifier">Static</span>
+                        <span ><b>useFactory</b></span>
+                        <a href="#useFactory"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>useFactory(factory: T)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">src/server/server-singleton.ts:19</a></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Type parameters :</b>
+                    <ul class="type-parameters">
+                        <li>T</li>
+                    </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Allow to set the factory class to use to build the server application.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>factory</td>
+                                    <td>
+                                            <code>T</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 
@@ -200,7 +285,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ServerApplication } from &#x27;../interfaces/server-application&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ServerApplication } from &#x27;./interfaces&#x27;;
 import { ServerFactory, SERVER_TYPE } from &#x27;./server-factory&#x27;;
 
 /**
@@ -208,9 +293,21 @@ import { ServerFactory, SERVER_TYPE } from &#x27;./server-factory&#x27;;
  *
  * @abstract
  */
-export class ServerSingleton{
+export abstract class ServerSingleton{
 
     private static app: ServerApplication;
+    private static factory: ServerFactory &#x3D; new ServerFactory();
+
+    /**
+     * Allow to set the factory class to use to build the server application.
+     *
+     * @static
+     */
+    public static useFactory&lt;T extends ServerFactory&gt;(factory: T): void {
+        if (!this.app){
+            this.factory &#x3D; factory;
+        }
+    }
 
     /**
      * Singleton method that return the unique server application instance.
@@ -221,7 +318,7 @@ export class ServerSingleton{
      */
     public static getInstance(type: SERVER_TYPE &#x3D; SERVER_TYPE.EXPRESS): ServerApplication{
         if (!this.app){
-            this.app &#x3D; ServerFactory.createServer(type);
+            this.app &#x3D; this.factory.createServer(type);
         }
 
         return this.app;

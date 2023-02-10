@@ -65,7 +65,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/interfaces/controller.ts</code>
+            <code>src/basic-controller/interfaces/controller.ts</code>
         </p>
 
 
@@ -77,6 +77,12 @@
 
             </p>
 
+            <p class="comment">
+                <h3>Extends</h3>
+            </p>
+            <p class="comment">
+                    <code>ActionsDictionary</code>
+            </p>
 
         <section>
             <h3 id="index">Index</h3>
@@ -92,21 +98,15 @@
                             <ul class="index-list">
                                 <li>
                                             <span class="modifier">Optional</span>
-                                        <a href="#handler" 
+                                        <a href="#handlers" 
 >
-                                            handler
+                                            handlers
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#instance" 
+                                        <a href="#id" 
 >
-                                            instance
-                                        </a>
-                                </li>
-                                <li>
-                                        <a href="#name" 
->
-                                            name
+                                            id
                                         </a>
                                 </li>
                             </ul>
@@ -124,9 +124,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="handler"></a>
-                                        <span class="name "><b>handler</b>
-                                            <a href="#handler">
+                                        <a name="handlers"></a>
+                                        <span class="name "><b>handlers</b>
+                                            <a href="#handlers">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -134,7 +134,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>handler:         <code><a href="../miscellaneous/functions.html#Controller" target="_self" >ControllerHandler[]</a></code>
+                                        <code>handlers:         <code><a href="../miscellaneous/functions.html#Controller" target="_self" >ControllerHandler[]</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -168,9 +168,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="instance"></a>
-                                        <span class="name "><b>instance</b>
-                                            <a href="#instance">
+                                        <a name="id"></a>
+                                        <span class="name "><b>id</b>
+                                            <a href="#id">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -178,46 +178,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>instance:         <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                                        </td>
-                                    </tr>
-
-
-
-
-
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-description"><p>The controller instance</p>
-</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="name"></a>
-                                        <span class="name "><b>name</b>
-                                            <a href="#name">
-                                                <span class="icon ion-ios-link"></span>
-                                            </a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>name:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -247,29 +208,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Controller {
-
-    /**
-     * The controller name.
-     */
-    name: string;
-
-    /**
-     * The controller instance
-     */
-    instance: any;
-
-    /**
-     * The handlers&#x27; list.
-     */
-    handler?: ControllerHandler[];
-}
-
-/**
- * Contains the available verbs for the service.
- * @enum {string}
- */
-export enum CONTROLLER_METHOD {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export enum CONTROLLER_METHOD {
     /** @value get */
     GET &#x3D; &#x27;get&#x27;,
     /** @value post */
@@ -278,6 +217,32 @@ export enum CONTROLLER_METHOD {
     PUT &#x3D; &#x27;put&#x27;,
     /** @value delete */
     DELETE &#x3D; &#x27;delete&#x27;
+}
+
+/**
+ * @ignore
+ */
+export interface ActionsDictionary {
+    [actionName: string]: any;
+}
+
+/**
+ * The controller structure.
+ *
+ * @property {string} name
+ * @property {ControllerHandler[]} [handler]
+ */
+export interface Controller extends ActionsDictionary{
+
+    /**
+     * The controller name.
+     */
+    id: string;
+
+    /**
+     * The handlers&#x27; list.
+     */
+    handlers?: ControllerHandler[];
 }
 
 /**
@@ -302,7 +267,7 @@ export interface ControllerHandler {
     /**
      * The handler name.
      */
-    handler: string;
+    handler: keyof ActionsDictionary;
 }</code></pre>
     </div>
 </div>

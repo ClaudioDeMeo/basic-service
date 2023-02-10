@@ -65,7 +65,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/basic-service/servers/express-server.ts</code>
+            <code>src/server/servers/express-server.ts</code>
         </p>
 
 
@@ -92,7 +92,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/basic-service/servers/express-server.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/server/servers/express-server.ts:15</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -105,10 +105,11 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import express, { Application, Router } from &#x27;express&#x27;;
 import morgan from &#x27;morgan&#x27;;
-import { Controller, ControllerHandler } from &#x27;../../interfaces/controller&#x27;;
-import { ServerApplication } from &#x27;../../interfaces/server-application&#x27;;
 import swaggerUi from &#x27;swagger-ui-express&#x27;;
 import { Server } from &#x27;http&#x27;;
+
+import { ServerApplication } from &#x27;../interfaces&#x27;;
+import { Controller, ControllerHandler } from &#x27;../../basic-controller/interfaces/controller&#x27;;
 
 /**
  * Router/Controller Dictionary
@@ -190,14 +191,14 @@ export class ExpressServer implements ServerApplication {
      * @param {Controller} controller
      */
     public addController(controller: Controller): void {
-        if (this.routerControllerMap[controller.name]) {
+        if (this.routerControllerMap[controller.id]) {
             throw new Error(&#x27;controller already presents&#x27;);
         }
 
         const router &#x3D; this.createRouterForController(controller);
 
-        if (controller.handler) {
-            this.addControllerHandlers(controller.name, controller.handler);
+        if (controller.handlers) {
+            this.addControllerHandlers(controller.id, controller.handlers);
         }
 
         this.app.use(router);
@@ -206,7 +207,7 @@ export class ExpressServer implements ServerApplication {
     private createRouterForController(controller: Controller): Router {
         const router &#x3D; express.Router();
 
-        this.routerControllerMap[controller.name] &#x3D; {
+        this.routerControllerMap[controller.id] &#x3D; {
             router: router,
             controller: controller
         };
@@ -214,13 +215,7 @@ export class ExpressServer implements ServerApplication {
         return router;
     }
 
-    /**
-     * Add one or more API controller handlers.
-     *
-     * @param {string} controllerid - the controller id.
-     * @param {(ControllerHandler | ControllerHandler[])} controllerHandler - one or more handlers.
-     */
-    public addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
+    private addControllerHandlers(controllerid: string, controllerHandlers: ControllerHandler | ControllerHandler[]): void {
         if (!this.routerControllerMap[controllerid]) {
             throw new Error(&#x27;controller not found&#x27;);
         }
@@ -230,7 +225,7 @@ export class ExpressServer implements ServerApplication {
         }
 
         const router &#x3D; this.routerControllerMap[controllerid].router;
-        const controller &#x3D; this.routerControllerMap[controllerid].controller.instance;
+        const controller &#x3D; this.routerControllerMap[controllerid].controller;
 
         controllerHandlers.forEach((controllerHandler: ControllerHandler): void &#x3D;&gt; {
             const method &#x3D; controllerHandler.method;
@@ -238,22 +233,17 @@ export class ExpressServer implements ServerApplication {
             const handler &#x3D; controllerHandler.handler;
 
             router[method](path, async(req: any, res: any) &#x3D;&gt; {
-                console.log(&#x27;Controller:&#x27;, controller);
-
-                console.log(&#x27;handler:&#x27;, handler);
-
-                console.log(&#x27;controller[handler]:&#x27;, controller[handler]);
-                const response &#x3D; await controller[handler](req);
+                const response &#x3D; await controller[handler]?.(req);
 
                 return res.send(response);
             });
 
-            if (!this.routerControllerMap[controllerid].controller.handler){
-                this.routerControllerMap[controllerid].controller.handler &#x3D; [];
+            if (!this.routerControllerMap[controllerid].controller.handlers){
+                this.routerControllerMap[controllerid].controller.handlers &#x3D; [];
             }
 
-            if (this.routerControllerMap[controllerid].controller.handler?.indexOf(controllerHandler) &#x3D;&#x3D;&#x3D; -1){
-                this.routerControllerMap[controllerid].controller.handler?.push(controllerHandler);
+            if (this.routerControllerMap[controllerid].controller.handlers?.indexOf(controllerHandler) &#x3D;&#x3D;&#x3D; -1){
+                this.routerControllerMap[controllerid].controller.handlers?.push(controllerHandler);
             }
         });
     }
@@ -264,7 +254,7 @@ export class ExpressServer implements ServerApplication {
      * @param {string} [path] - the path of the swagger api.
      * @param {string} [location] -  the direcotry of the swagger.
      */
-    public prepareSwagger(path: string &#x3D; DEFAULT_SWAGGER_PATH, location: string &#x3D; DEFAULT_SWAGGER_LOCATION): void {
+    public addSwagger(path: string &#x3D; DEFAULT_SWAGGER_PATH, location: string &#x3D; DEFAULT_SWAGGER_LOCATION): void {
         this.app.use(express.static(location));
         this.app.use(
             path,

@@ -65,7 +65,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/interfaces/server-application.ts</code>
+            <code>src/server/interfaces/server-application.ts</code>
         </p>
 
 
@@ -97,15 +97,15 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#addControllerHandlers" 
->
-                                        addControllerHandlers
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="#addMiddleware" 
 >
                                         addMiddleware
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#addSwagger" 
+>
+                                        addSwagger
                                     </a>
                                 </li>
                                 <li>
@@ -118,12 +118,6 @@
                                     <a href="#listen" 
 >
                                         listen
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#prepareSwagger" 
->
-                                        prepareSwagger
                                     </a>
                                 </li>
                             </ul>
@@ -159,7 +153,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">src/interfaces/server-application.ts:38</a></div>
+                            class="link-to-prism">src/server/interfaces/server-application.ts:38</a></div>
                 </td>
             </tr>
 
@@ -213,102 +207,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="addControllerHandlers"></a>
-                    <span class="name">
-                        <span ><b>addControllerHandlers</b></span>
-                        <a href="#addControllerHandlers"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>addControllerHandlers(controllerid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, controllerHandler: <a href="../undefineds/Controller.html" target="_self">ControllerHandler | ControllerHandler[]</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">src/interfaces/server-application.ts:46</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Add one or more API controller handlers.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>controllerid</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>the controller id.</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>controllerHandler</td>
-                                    <td>
-                                                <code><a href="../miscellaneous/functions.html#Controller" target="_self" >ControllerHandler | ControllerHandler[]</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>one or more handlers.</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="addMiddleware"></a>
                     <span class="name">
                         <span ><b>addMiddleware</b></span>
@@ -326,7 +224,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/interfaces/server-application.ts:31</a></div>
+                            class="link-to-prism">src/server/interfaces/server-application.ts:31</a></div>
                 </td>
             </tr>
 
@@ -380,159 +278,24 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="close"></a>
+                    <a name="addSwagger"></a>
                     <span class="name">
-                        <span ><b>close</b></span>
-                        <a href="#close"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>addSwagger</b></span>
+                        <a href="#addSwagger"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>close()</code>
+<code>addSwagger(path?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, location?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="24"
-                            class="link-to-prism">src/interfaces/server-application.ts:24</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Close the server.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="listen"></a>
-                    <span class="name">
-                        <span ><b>listen</b></span>
-                        <a href="#listen"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>listen(port?: string | number, callback?: () => void)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/interfaces/server-application.ts:19</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Allow the server to start listen for requests.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>port</td>
-                                    <td>
-                                            <code>string | number</code>
-                                    </td>
-
-                                    <td>
-                                        Yes
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>the listen port of the server.</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>callback</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-                                    </td>
-
-                                    <td>
-                                        Yes
-                                    </td>
-
-
-                                    <td>
-                                        <ul>
-<li>the on listen callback.</li>
-</ul>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="prepareSwagger"></a>
-                    <span class="name">
-                        <span ><b>prepareSwagger</b></span>
-                        <a href="#prepareSwagger"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>prepareSwagger(path?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, location?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">src/interfaces/server-application.ts:54</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">src/server/interfaces/server-application.ts:46</a></div>
                 </td>
             </tr>
 
@@ -607,13 +370,148 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="close"></a>
+                    <span class="name">
+                        <span ><b>close</b></span>
+                        <a href="#close"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>close()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/server/interfaces/server-application.ts:24</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Close the server.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listen"></a>
+                    <span class="name">
+                        <span ><b>listen</b></span>
+                        <a href="#listen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>listen(port?: string | number, callback?: () => void)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">src/server/interfaces/server-application.ts:19</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Allow the server to start listen for requests.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>port</td>
+                                    <td>
+                                            <code>string | number</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the listen port of the server.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>callback</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the on listen callback.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, ControllerHandler } from &#x27;./controller&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller } from &#x27;../../basic-controller/interfaces&#x27;;
 
 /**
  * Rappresent the Server application.
@@ -653,20 +551,12 @@ export interface ServerApplication {
     addController(controller: Controller): void;
 
     /**
-     * Add one or more API controller handlers.
-     *
-     * @param {string} controllerid - the controller id.
-     * @param {(ControllerHandler | ControllerHandler[])} controllerHandler - one or more handlers.
-     */
-    addControllerHandlers(controllerid: string, controllerHandler: ControllerHandler | ControllerHandler[]): void;
-
-    /**
      * Expose the swagger API.
      *
      * @param {string} [path] - the path of the swagger api.
      * @param {string} [location] -  the direcotry of the swagger.
      */
-    prepareSwagger(path?: string, location?: string): void;
+    addSwagger(path?: string, location?: string): void;
 
 }</code></pre>
     </div>

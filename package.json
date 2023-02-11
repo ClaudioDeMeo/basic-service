@@ -1,6 +1,6 @@
 {
     "name": "@experiments72/basic-service",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "main": "src/index.js",
     "types": "src/index.d.ts",
     "engines": {

@@ -108,6 +108,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
+                                <a href="#attachControllers" >attachControllers</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#listen" >listen</a>
                             </li>
                         </ul>
@@ -134,7 +138,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/basic-service/basic-service.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/basic-service/basic-service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -225,7 +229,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/basic-service/basic-service.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/basic-service/basic-service.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -249,6 +253,86 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="attachControllers"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>attachControllers</b></span>
+                        <a href="#attachControllers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>attachControllers(controllers?: <a href="../interfaces/Controller.html" target="_self">Controller | Controller[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/basic-service/basic-service.ts:50</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Allow to attach new controllers to the server.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>controllers</td>
+                                    <td>
+                                                <code><a href="../interfaces/Controller.html" target="_self" >Controller | Controller[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>The list of controllers.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="listen"></a>
                     <span class="name">
                         <span class="modifier">Public</span>
@@ -267,8 +351,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/basic-service/basic-service.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/basic-service/basic-service.ts:72</a></div>
                 </td>
             </tr>
 
@@ -296,10 +380,9 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ServiceConfig } from &#x27;./interfaces&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ServiceConfig, Controller } from &#x27;./interfaces&#x27;;
 import { ServerSingleton } from &#x27;../server&#x27;;
 import { ServerApplication } from &#x27;../server/interfaces&#x27;;
-import { Controller } from &#x27;../basic-controller/interfaces&#x27;;
 
 /**
  * Rappresents the basic class to build a microservice. Just use this class or extend it to create a new service and execute the method run to start it.
@@ -315,7 +398,7 @@ export class BasicService{
 
     private readonly server: ServerApplication;
     private readonly serviceConfig?: ServiceConfig;
-    private readonly controllers?: Controller[] &#x3D; [];
+    private controllers?: Controller[] &#x3D; [];
 
     /**
      * Creates a new BasicService.
@@ -333,7 +416,7 @@ export class BasicService{
 
         this.server &#x3D; ServerSingleton.getInstance(serviceConfig?.serverType);
         this.attachSwaggerToServer();
-        this.attachControllersToServer();
+        this.attachControllers(this.controllers);
     }
 
     private attachSwaggerToServer(): void {
@@ -342,10 +425,27 @@ export class BasicService{
         }
     }
 
-    private attachControllersToServer(): void {
-        this.controllers?.forEach((controller: Controller): void &#x3D;&gt; {
-            this.server.addController(controller);
-        });
+    /**
+     * Allow to attach new controllers to the server.
+     * @param {Controller | Controller[]} [controllers] - The list of controllers.
+     */
+    public attachControllers(controllers?: Controller | Controller[]): void {
+        if (controllers){
+            const controllerArray &#x3D; Array.isArray(controllers) ? controllers : [controllers];
+
+            controllerArray?.forEach((controller: Controller): void &#x3D;&gt; {
+                this.server.addController(controller);
+                this.addController(controller);
+            });
+        }
+    }
+
+    private addController(controller: Controller): void {
+        if (!this.controllers){
+            this.controllers &#x3D; [];
+        }
+
+        this.controllers.push(controller);
     }
 
     /**

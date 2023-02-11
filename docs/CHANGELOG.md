@@ -1,3 +1,5 @@
+## [1.0.4](https://gitlab.com/experiments72/basic-service/compare/v1.0.3...v1.0.4) (2023-02-11)
+
 ## [1.0.3](https://gitlab.com/experiments72/basic-service/compare/v1.0.2...v1.0.3) (2023-02-10)
 
 ## [1.0.2](https://gitlab.com/experiments72/basic-service/compare/v1.0.1...v1.0.2) (2023-02-08)

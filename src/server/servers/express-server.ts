@@ -4,7 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import { Server } from 'http';
 
 import { ServerApplication } from '../interfaces';
-import { Controller, ControllerHandler } from '../../basic-controller/interfaces/controller';
+import { Controller, ControllerHandler } from '../../basic-service/interfaces/controller';
 
 /**
  * Router/Controller Dictionary

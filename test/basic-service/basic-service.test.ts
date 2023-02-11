@@ -1,5 +1,5 @@
-import { BasicController, BasicService } from '../../src';
-import { Controller, ControllerHandler } from '../../src/basic-controller/interfaces';
+import { BasicService } from '../../src';
+import { Controller, ControllerHandler } from '../../src/basic-service/interfaces';
 import { ServerSingleton } from '../../src/server';
 import { ServerApplication } from '../../src/server/interfaces';
 
@@ -52,12 +52,12 @@ describe('basic-service', (): void => {
             });
 
             it('should add controllers to the server application if is declared when extends BasciService', (): void => {
-                class Controller extends BasicController{
+                class TestController implements Controller{
                     public id: string = 'test';
                     public handlers: ControllerHandler[];
                 }
 
-                const controller = new Controller();
+                const controller = new TestController();
 
                 new BasicService(undefined, [controller]);
                 expect(serverApplicationMock.addController).toBeCalledWith(controller);

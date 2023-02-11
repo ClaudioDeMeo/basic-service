@@ -1,5 +1,5 @@
 import { ApiConfig } from './interfaces';
-import { ControllerHandler, CONTROLLER_METHOD } from '../basic-controller/interfaces';
+import { ControllerHandler, CONTROLLER_METHOD } from '../basic-service/interfaces';
 
 /**
  * Decorator that marks a method as an API.

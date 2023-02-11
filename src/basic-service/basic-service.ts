@@ -1,7 +1,6 @@
-import { ServiceConfig } from './interfaces';
+import { ServiceConfig, Controller } from './interfaces';
 import { ServerSingleton } from '../server';
 import { ServerApplication } from '../server/interfaces';
-import { Controller } from '../basic-controller/interfaces';
 
 /**
  * Rappresents the basic class to build a microservice. Just use this class or extend it to create a new service and execute the method run to start it.

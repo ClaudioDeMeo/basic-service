@@ -1,4 +1,4 @@
-import { Controller } from '../../basic-controller/interfaces';
+import { Controller } from '../../basic-service/interfaces';
 
 /**
  * Rappresent the Server application.

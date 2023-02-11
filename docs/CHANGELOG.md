@@ -1,3 +1,10 @@
+# [1.1.0](https://gitlab.com/experiments72/basic-service/compare/v1.0.4...v1.1.0) (2023-02-11)
+
+
+### Features
+
+* supported mixed service creation ([7d961ac](https://gitlab.com/experiments72/basic-service/commit/7d961ac54de1164752de5c7b72033e43f19e3fc9))
+
 ## [1.0.4](https://gitlab.com/experiments72/basic-service/compare/v1.0.3...v1.0.4) (2023-02-11)
 
 ## [1.0.3](https://gitlab.com/experiments72/basic-service/compare/v1.0.2...v1.0.3) (2023-02-10)

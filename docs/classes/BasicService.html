@@ -133,7 +133,7 @@
                 <tr>
                     <td class="col-md-4">
                                 <span class="modifier">Public</span>
-                        <code>constructor(serviceConfig?: <a href="../interfaces/ServiceConfig.html" target="_self">ServiceConfig</a>, controllers?: <a href="../interfaces/Controller.html" target="_self">Controller[]</a>)</code>
+                        <code>constructor(serviceConfig?: <a href="../interfaces/ServiceConfig.html" target="_self">ServiceConfig</a>, controllers?: <a href="../interfaces/Controller.html" target="_self">Controller | Controller[]</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -180,7 +180,7 @@
                                                         <td>controllers</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../interfaces/Controller.html" target="_self" >Controller[]</a></code>
+                                                                        <code><a href="../interfaces/Controller.html" target="_self" >Controller | Controller[]</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -403,15 +403,15 @@ export class BasicService{
     /**
      * Creates a new BasicService.
      * @param {ServiceConfig} [serviceConfig] - The service configuration.
-     * @param {Controller[]} [controllers] - The list of controllers.
+     * @param {Controller| Controller[]} [controllers] - The list of controllers.
      */
-    public constructor(serviceConfig?: ServiceConfig, controllers?: Controller[]) {
+    public constructor(serviceConfig?: ServiceConfig, controllers?: Controller| Controller[]) {
         if (serviceConfig){
             this.serviceConfig &#x3D; serviceConfig;
         }
 
         if (controllers){
-            this.controllers &#x3D; controllers;
+            this.controllers &#x3D; Array.isArray(controllers) ? controllers : [controllers];
         }
 
         this.server &#x3D; ServerSingleton.getInstance(serviceConfig?.serverType);

@@ -62,8 +62,29 @@ const pingService = new BasicService({port: 3000});
 
 pingService.run(() =&gt; {
     console.log(&#39;server listen on port 3000&#39;);
-});</code></pre></div><h3 id="create-a-controller">Create a controller</h3>
-<p>Create a class and use <code>Controller</code> and <code>API</code> decorators:</p>
+});</code></pre></div><p>or use the decorator</p>
+<div><pre class="line-numbers"><code class="language-none">&#64;Service({port: 3000})
+class PingService extends BasicService{
+
+    protected run = (): void =&gt; {
+        console.log(&#39;server listen on port 3000&#39;)
+    }
+
+}</code></pre></div><h3 id="create-a-controller">Create a controller</h3>
+<p>Create a class that implement <code>IController</code> interface:</p>
+<div><pre class="line-numbers"><code class="language-none">class PingController implements IController{
+
+    public readonly id: string = &#39;ping&#39;;
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: &#39;/ping&#39;,
+        handler: &#39;ping&#39;
+    }];
+
+    public ping(): string{
+        return &#39;pong&#39;;
+    }
+}</code></pre></div><p>or use <code>Controller</code> and <code>API</code> decorators:</p>
 <div><pre class="line-numbers"><code class="language-none">import { Controller, GET } from &#39;../../src&#39;;
 
 &#64;Controller(&#39;ping&#39;)
@@ -74,7 +95,80 @@ export class PingController{
         return &#39;pong&#39;;
     }
 
-}</code></pre></div><h2 id="useful-commands">Useful commands</h2>
+}</code></pre></div><h3 id="examples">Examples</h3>
+<h4 id="without-decorators">Without Decorators</h4>
+<div><pre class="line-numbers"><code class="language-none">class PingService extends BasicService{
+
+    protected run = (): void =&gt; {
+        console.log(&#39;server listen on port 3000&#39;)
+    }
+
+}
+
+class PingController implements IController{
+
+    public readonly id: string = &#39;ping&#39;;
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: &#39;/ping&#39;,
+        handler: &#39;ping&#39;
+    }];
+
+    public ping(): string{
+        return &#39;pong&#39;;
+    }
+
+}
+
+const pingService = new PingService({port: 3000}, new PingController());
+
+pingService.listen();</code></pre></div><h4 id="with-decorators">With Decorators</h4>
+<div><pre class="line-numbers"><code class="language-none">&#64;Service({port: 3000})
+class PingService extends BasicService{
+
+    protected run = (): void =&gt; {
+        console.log(&#39;server listen on port 3000&#39;)
+    }
+
+}
+
+&#64;Controller(&#39;ping&#39;)
+class PingController{
+
+    &#64;GET(&#39;/ping&#39;)
+    public ping(): string{
+        return &#39;pong&#39;;
+    }
+
+}</code></pre></div><h4 id="mixed-usage">Mixed Usage</h4>
+<div><pre class="line-numbers"><code class="language-none">class PingService extends BasicService{
+
+    protected run = (): void =&gt; {
+        console.log(&#39;server listen on port 3000&#39;)
+    }
+
+}
+
+const pingService = new PingService({port: 3000});
+
+&#64;Controller(&#39;ping&#39;, pingService)
+class PingController implements IController{
+
+    public readonly id: string = &#39;ping&#39;;
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: &#39;/ping&#39;,
+        handler: &#39;ping&#39;
+    }];
+
+    &#64;GET(&#39;/ping&#39;)
+    public ping(): string{
+        return &#39;pong&#39;;
+    }
+
+}
+
+pingService.listen();</code></pre></div><h2 id="useful-commands">Useful commands</h2>
 <ul>
 <li><code>npm run build</code>   compile typescript to js</li>
 <li><code>npm run watch</code>   watch for changes and compile</li>

@@ -7,11 +7,13 @@ describe('decorators', (): void => {
 
         beforeEach((): void => {
             (ServiceComposer as any).controllers = [];
+            (ServiceComposer as any).service = undefined;
         });
 
 
         afterAll((): void => {
             (ServiceComposer as any).controllers = [];
+            (ServiceComposer as any).service = undefined;
         });
 
         it('should add the controller into server', (): void => {

@@ -12,12 +12,10 @@ export function Controller(id?: string, service?: BasicService){
     return (target: any): void => {
         target.prototype.id = id || target.name;
 
-        const controller = new target();
-
         if (service){
-            service.attachControllers(controller);
-        }else{
-            ServiceComposer.addController(controller);
+            ServiceComposer.createService(service);
         }
+
+        ServiceComposer.addController(new target());
     }
 }

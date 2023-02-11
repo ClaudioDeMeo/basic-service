@@ -1,3 +1,4 @@
+import { ServiceComposer } from './service-composer';
 import { ServiceConfig } from '../basic-service/interfaces';
 
 /**
@@ -8,12 +9,14 @@ import { ServiceConfig } from '../basic-service/interfaces';
  *
  * @return {Function}
  */
-export function Service(serviceConfig: ServiceConfig){
+export function Service(serviceConfig?: ServiceConfig){
     return (target: any): void => {
-        target.prototype.serviceConfig = serviceConfig;
+        if (serviceConfig){
+            target.prototype.serviceConfig = serviceConfig;
+        }
 
         const service = new target.prototype.constructor(serviceConfig);
 
-        service.listen();
+        ServiceComposer.createService(service);
     }
 }

@@ -64,6 +64,26 @@ describe('basic-service', (): void => {
             });
         });
 
+        describe('.attachControllers()', (): void => {
+            beforeAll((): void => {
+                const app = ServerSingleton.getInstance();
+                app.close();
+            });
+
+            it('should add controllers to the server application', (): void => {
+                class TestController implements Controller{
+                    public id: string = 'test';
+                    public handlers: ControllerHandler[];
+                }
+
+                const controller = new TestController();
+
+                const server = new BasicService();
+                server.attachControllers([controller]);
+                expect(serverApplicationMock.addController).toBeCalledWith(controller);
+            });
+        });
+
         describe('.listen()', (): void => {
 
             beforeAll((): void => {

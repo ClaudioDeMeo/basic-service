@@ -16,7 +16,7 @@ export class BasicService{
 
     private readonly server: ServerApplication;
     private readonly serviceConfig?: ServiceConfig;
-    private readonly controllers?: Controller[] = [];
+    private controllers?: Controller[] = [];
 
     /**
      * Creates a new BasicService.
@@ -34,7 +34,7 @@ export class BasicService{
 
         this.server = ServerSingleton.getInstance(serviceConfig?.serverType);
         this.attachSwaggerToServer();
-        this.attachControllersToServer();
+        this.attachControllers(this.controllers);
     }
 
     private attachSwaggerToServer(): void {
@@ -43,10 +43,27 @@ export class BasicService{
         }
     }
 
-    private attachControllersToServer(): void {
-        this.controllers?.forEach((controller: Controller): void => {
-            this.server.addController(controller);
-        });
+    /**
+     * Allow to attach new controllers to the server.
+     * @param {Controller | Controller[]} [controllers] - The list of controllers.
+     */
+    public attachControllers(controllers?: Controller | Controller[]): void {
+        if (controllers){
+            const controllerArray = Array.isArray(controllers) ? controllers : [controllers];
+
+            controllerArray?.forEach((controller: Controller): void => {
+                this.server.addController(controller);
+                this.addController(controller);
+            });
+        }
+    }
+
+    private addController(controller: Controller): void {
+        if (!this.controllers){
+            this.controllers = [];
+        }
+
+        this.controllers.push(controller);
     }
 
     /**

@@ -1,6 +1,7 @@
 import { BasicService, Service } from '../../src';
 import { ServerSingleton } from '../../src/server';
 import { ServiceConfig } from '../../src/basic-service/interfaces';
+import { ServiceComposer } from '../../src/decorators/service-composer';
 
 describe('decorators', (): void => {
     describe('@Service', (): void => {
@@ -9,12 +10,16 @@ describe('decorators', (): void => {
             const app = ServerSingleton.getInstance();
             app.close();
             (ServerSingleton as any).app = undefined;
+            (ServiceComposer as any).controllers = [];
+            (ServiceComposer as any).service = undefined;
         });
 
         afterAll((): void => {
             const app = ServerSingleton.getInstance();
             app.close();
             (ServerSingleton as any).app = undefined;
+            (ServiceComposer as any).controllers = [];
+            (ServiceComposer as any).service = undefined;
         });
 
         it('should initialize the BasicService with the given config', (): void => {
@@ -38,6 +43,7 @@ describe('decorators', (): void => {
                 protected run = run;
             }
 
+            expect((ServiceComposer as any).service).not.toBeUndefined();
             expect(serviceListenSpy).toHaveBeenCalled();
             expect(appListenSpy).toBeCalledWith('3001', run);
         });

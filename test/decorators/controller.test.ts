@@ -1,22 +1,17 @@
 import { API, Controller, CONTROLLER_METHOD } from '../../src';
-import { ServerSingleton } from '../../src/server';
-import { ServerApplication } from '../../src/server/interfaces';
+import { ServiceComposer } from '../../src/decorators/service-composer';
 
 
 describe('decorators', (): void => {
     describe('@Controller', (): void => {
 
         beforeEach((): void => {
-            const app = ServerSingleton.getInstance();
-            app.close();
-            (ServerSingleton as any).app = undefined;
+            (ServiceComposer as any).controllers = [];
         });
 
 
         afterAll((): void => {
-            const app = ServerSingleton.getInstance();
-            app.close();
-            (ServerSingleton as any).app = undefined;
+            (ServiceComposer as any).controllers = [];
         });
 
         it('should add the controller into server', (): void => {
@@ -27,13 +22,7 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (ServerSingleton as any).app;
-
-            const routerControllerMap = (serverApplication as any).routerControllerMap;
-
-            expect(routerControllerMap['Stub']).not.toBeUndefined();
-            expect(routerControllerMap['Stub'].controller).not.toBeUndefined();
-            expect(routerControllerMap['Stub'].router).not.toBeUndefined();
+            expect((ServiceComposer as any).controllers.length).toBe(1);
         });
 
         it('should add the controller into server with given name', (): void => {
@@ -46,13 +35,8 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (ServerSingleton as any).app;
-
-            const routerControllerMap = (serverApplication as any).routerControllerMap;
-
-            expect(routerControllerMap[controlName]).not.toBeUndefined();
-            expect(routerControllerMap[controlName].controller).not.toBeUndefined();
-            expect(routerControllerMap[controlName].router).not.toBeUndefined();
+            expect((ServiceComposer as any).controllers.length).toBe(1);
+            expect((ServiceComposer as any).controllers[0].id).toBe(controlName);
         });
 
         it('should add the controller into server with given name and with handler', (): void => {
@@ -72,14 +56,10 @@ describe('decorators', (): void => {
 
             }
 
-            const serverApplication: ServerApplication = (ServerSingleton as any).app;
-
-            const routerControllerMap = (serverApplication as any).routerControllerMap;
-
-            expect(routerControllerMap[controlName]).not.toBeUndefined();
-            expect(routerControllerMap[controlName].controller).not.toBeUndefined();
-            expect(routerControllerMap[controlName].router).not.toBeUndefined();
-            expect(routerControllerMap[controlName].controller.handlers.length).toBe(1);
+            expect((ServiceComposer as any).controllers.length).toBe(1);
+            expect((ServiceComposer as any).controllers[0].id).toBe(controlName);
+            expect((ServiceComposer as any).controllers[0].handlers).not.toBeUndefined();
+            expect((ServiceComposer as any).controllers[0].handlers.length).toBe(1);
         });
     });
 });

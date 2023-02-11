@@ -1,4 +1,5 @@
-import { ServerSingleton } from '../server';
+import { ServiceComposer } from './service-composer';
+import { BasicService } from '../basic-service';
 
 /**
  * Decorator that marks a class as a controller.
@@ -7,12 +8,16 @@ import { ServerSingleton } from '../server';
  *
  * @return {Function}
  */
-export function Controller(id?: string){
+export function Controller(id?: string, service?: BasicService){
     return (target: any): void => {
-        const server = ServerSingleton.getInstance();
-
         target.prototype.id = id || target.name;
 
-        server.addController(new target());
+        const controller = new target();
+
+        if (service){
+            service.attachControllers(controller);
+        }else{
+            ServiceComposer.addController(controller);
+        }
     }
 }

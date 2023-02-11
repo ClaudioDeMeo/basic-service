@@ -21,15 +21,15 @@ export class BasicService{
     /**
      * Creates a new BasicService.
      * @param {ServiceConfig} [serviceConfig] - The service configuration.
-     * @param {Controller[]} [controllers] - The list of controllers.
+     * @param {Controller| Controller[]} [controllers] - The list of controllers.
      */
-    public constructor(serviceConfig?: ServiceConfig, controllers?: Controller[]) {
+    public constructor(serviceConfig?: ServiceConfig, controllers?: Controller| Controller[]) {
         if (serviceConfig){
             this.serviceConfig = serviceConfig;
         }
 
         if (controllers){
-            this.controllers = controllers;
+            this.controllers = Array.isArray(controllers) ? controllers : [controllers];
         }
 
         this.server = ServerSingleton.getInstance(serviceConfig?.serverType);

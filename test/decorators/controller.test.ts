@@ -1,4 +1,4 @@
-import { API, Controller, CONTROLLER_METHOD } from '../../src';
+import { API, BasicService, Controller, CONTROLLER_METHOD } from '../../src';
 import { ServiceComposer } from '../../src/decorators/service-composer';
 
 
@@ -37,6 +37,24 @@ describe('decorators', (): void => {
 
             expect((ServiceComposer as any).controllers.length).toBe(1);
             expect((ServiceComposer as any).controllers[0].id).toBe(controlName);
+        });
+
+        it('should add the controller into the given server', (): void => {
+
+            const testService = new BasicService();
+
+            const attachControllersSpy = jest.spyOn(testService, 'attachControllers');
+
+            const controlName = 'test';
+
+            @Controller(controlName, testService)
+            //@ts-ignore
+            class Stub {
+
+            }
+
+            expect((testService as any).controllers).not.toBeUndefined();
+            expect((testService as any).controllers.length).toBe(1);
         });
 
         it('should add the controller into server with given name and with handler', (): void => {

@@ -1,5 +1,4 @@
-import { BasicService } from '../../src';
-import { Controller, ControllerHandler } from '../../src/basic-service/interfaces';
+import { BasicService, ControllerHandler, IController } from '../../src';
 import { ServerSingleton } from '../../src/server';
 import { ServerApplication } from '../../src/server/interfaces';
 
@@ -52,7 +51,7 @@ describe('basic-service', (): void => {
             });
 
             it('should add controllers to the server application if is declared when extends BasciService', (): void => {
-                class TestController implements Controller{
+                class TestController implements IController{
                     public id: string = 'test';
                     public handlers: ControllerHandler[];
                 }
@@ -71,7 +70,7 @@ describe('basic-service', (): void => {
             });
 
             it('should add controllers to the server application', (): void => {
-                class TestController implements Controller{
+                class TestController implements IController{
                     public id: string = 'test';
                     public handlers: ControllerHandler[];
                 }

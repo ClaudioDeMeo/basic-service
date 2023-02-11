@@ -1,5 +1,5 @@
 {
-    "entryFile": "examples/ping/ping.ts",
+    "entryFile": "examples/ping/index.ts",
     "noImplicitAdditionalProperties": "throw-on-extras",
     "spec": {
         "outputDirectory": "swagger",

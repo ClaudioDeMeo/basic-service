@@ -46,9 +46,40 @@ pingService.run(() => {
 });
 ```
 
+or use the decorator
+
+```
+@Service({port: 3000})
+class PingService extends BasicService{
+
+    protected run = (): void => {
+        console.log('server listen on port 3000')
+    }
+
+}
+```
+
 ### Create a controller
 
-Create a class and use `Controller` and `API` decorators:
+Create a class that implement `IController` interface:
+
+```
+class PingController implements IController{
+
+    public readonly id: string = 'ping';
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: '/ping',
+        handler: 'ping'
+    }];
+
+    public ping(): string{
+        return 'pong';
+    }
+}
+```
+
+or use `Controller` and `API` decorators:
 
 ```
 import { Controller, GET } from '../../src';
@@ -62,6 +93,95 @@ export class PingController{
     }
 
 }
+```
+
+### Examples
+
+#### Without Decorators
+
+```
+class PingService extends BasicService{
+
+    protected run = (): void => {
+        console.log('server listen on port 3000')
+    }
+
+}
+
+class PingController implements IController{
+
+    public readonly id: string = 'ping';
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: '/ping',
+        handler: 'ping'
+    }];
+
+    public ping(): string{
+        return 'pong';
+    }
+
+}
+
+const pingService = new PingService({port: 3000}, new PingController());
+
+pingService.listen();
+```
+
+#### With Decorators
+
+```
+@Service({port: 3000})
+class PingService extends BasicService{
+
+    protected run = (): void => {
+        console.log('server listen on port 3000')
+    }
+
+}
+
+@Controller('ping')
+class PingController{
+
+    @GET('/ping')
+    public ping(): string{
+        return 'pong';
+    }
+
+}
+```
+
+#### Mixed Usage
+
+```
+class PingService extends BasicService{
+
+    protected run = (): void => {
+        console.log('server listen on port 3000')
+    }
+
+}
+
+const pingService = new PingService({port: 3000});
+
+@Controller('ping', pingService)
+class PingController implements IController{
+
+    public readonly id: string = 'ping';
+    public readonly handlers?: ControllerHandler[] = [{
+        method: CONTROLLER_METHOD.GET,
+        path: '/ping',
+        handler: 'ping'
+    }];
+
+    @GET('/ping')
+    public ping(): string{
+        return 'pong';
+    }
+
+}
+
+pingService.listen();
 ```
 
 ## Useful commands

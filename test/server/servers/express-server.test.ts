@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { Controller, ControllerHandler, CONTROLLER_METHOD } from '../../../src/basic-service/interfaces';
+import { IController, ControllerHandler, CONTROLLER_METHOD } from '../../../src';
 import { ServerApplication } from '../../../src/server/interfaces';
 import { ExpressServer } from '../../../src/server/servers/express-server';
 
@@ -149,7 +149,7 @@ describe('basic-service', (): void => {
                 it('should add an express router and a route automatically', async(): Promise<void> =>{
                     const path = '/testcontrollerwithhandler';
                     const controllerResult = 'TEST';
-                    class TestController implements Controller {
+                    class TestController implements IController {
 
                         public id: string = 'test';
 

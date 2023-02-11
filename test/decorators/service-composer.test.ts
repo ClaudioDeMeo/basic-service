@@ -1,7 +1,6 @@
-import { BasicService, Controller } from '../../src';
+import { BasicService, Controller, IController, ControllerHandler } from '../../src';
 import { ServerSingleton } from '../../src/server';
 import { ServiceComposer } from '../../src/decorators/service-composer';
-import { Controller as ControllerInterface, ControllerHandler } from '../../src/basic-service/interfaces';
 
 describe('decorators', (): void => {
     describe('ServiceComposer', (): void => {
@@ -48,7 +47,7 @@ describe('decorators', (): void => {
         describe('.addController()', (): void => {
 
             it('shold add a controller to the server', (): void => {
-                class TestController implements ControllerInterface{
+                class TestController implements IController{
                     id: string = 'test';
                     handlers: ControllerHandler[]  = [];
                 }
@@ -62,7 +61,7 @@ describe('decorators', (): void => {
             });
 
             it('shold add a controller also if the server isn\'t loaded', (): void => {
-                class TestController implements ControllerInterface{
+                class TestController implements IController{
                     id: string = 'test';
                     handlers: ControllerHandler[]  = [];
                 }

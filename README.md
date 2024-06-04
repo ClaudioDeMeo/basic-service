@@ -8,22 +8,6 @@
 
 This is a basic service module to implement microservices.
 
-### Semantic Versioning & Commit Convention
-
-This project follows [semantic versioning](https://semver.org/).
-We release patch versions for critical bugfixes, minor versions for new features or non-essential changes, and major
-versions for any breaking changes.
-
-This project also follows the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) convention with some
-additional customization:
-
-#### Patch version changes
-
-- refactor(optional_scope) - indicates a code refactoring.
-- chore(deps): indicates some dependency has been added / updated and therefore a new release is needed.
-- no-release: indicates the commit shouldn't trigger a release no matter what.
-
-
 ## Installation / Requirements
 
 Nodejs >= 18

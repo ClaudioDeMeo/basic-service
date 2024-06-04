@@ -1,0 +1,23 @@
+name: Publish package to GitHub Packages
+run-name: ${{ github.actor }} is publishing the package
+on:
+    workflow_run:
+        workflows: [Build, Analysis]
+        types: [completed]
+        branches: [main]
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            -   uses: actions/checkout@v4
+            -   uses: actions/setup-node@v4
+                with:
+                    node-version: '18.x'
+                    registry-url: 'https://npm.pkg.github.com'
+                    scope: '@claudiodemeo'
+            -   run: npx semantic-release
+                env:
+                    NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

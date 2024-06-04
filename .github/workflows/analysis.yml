@@ -1,0 +1,27 @@
+name: Analysis
+run-name: ${{ github.actor }} is analyzing
+on:
+    workflow_run:
+        workflows: [Install]
+        types: [completed]
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        container: node:18
+        steps:
+            -   run: npm run lint
+    dependencies-scan:
+        runs-on: ubuntu-latest
+        container: node:18
+        steps:
+            -   run: npm audit --omit=dev
+    test:
+        runs-on: ubuntu-latest
+        container: node:18
+        steps:
+            -   run: npm run test:ci
+            -   uses: actions/upload-artifact@v4
+                with:
+                    path: |
+                        coverage
+                        junit.xml

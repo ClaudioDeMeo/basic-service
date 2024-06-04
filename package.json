@@ -1,5 +1,9 @@
 {
-    "name": "@experiments72/basic-service",
+    "name": "@claudiodemeo/basic-service",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ClaudioDeMeo/basic-service.git"
+    },
     "version": "1.1.0",
     "main": "src/index.js",
     "types": "src/index.d.ts",

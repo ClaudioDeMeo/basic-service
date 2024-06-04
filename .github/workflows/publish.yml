@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish
 run-name: ${{ github.actor }} is publishing the package
 on:
     workflow_run:
@@ -7,6 +7,7 @@ on:
         branches: [main]
 jobs:
     publish:
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
         permissions:
             contents: read
